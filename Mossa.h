@@ -42,11 +42,7 @@ private:
 
 public:
 	//costruttore
-	Mossa(Casella part, Casella arr) {
-		partenza = part;
-		arrivo = arr;
-	
-	}
+	Mossa(Casella &part, Casella &arr);
 
 	Casella getCasellaPartenza() const {
 		return partenza;
@@ -55,12 +51,6 @@ public:
 	Casella getCasellaArrivo() const {
 		return arrivo;
 	}
-
-
-
-
-
-
 
 
 

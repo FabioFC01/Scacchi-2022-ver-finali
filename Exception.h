@@ -21,9 +21,7 @@ public:
 
 	//funzione membro per ottenere descrizione
 	//dell'eccezione
-	const string what() const {
-		return description_;
-	}
+	const string what() const;
 
 
 

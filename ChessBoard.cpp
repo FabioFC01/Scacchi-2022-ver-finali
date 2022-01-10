@@ -429,7 +429,7 @@ void ChessBoard::faiMossa() {
 						//proviamo una ad una le varie mosse 
 						//e vediamo se sono regolari
 
-						for (int i = 0; i < mosse.size(); i++) {
+						for (unsigned int i = 0; i < mosse.size(); i++) {
 
 							//se non è stata ancora fatta una mossa regolare
 							if (!mossaFatta) {
@@ -662,7 +662,7 @@ void ChessBoard::faiMossa() {
 						//proviamo una ad una le varie mosse 
 						//e vediamo se sono regolari
 
-						for (int i = 0; i < mosse.size(); i++) {
+						for (unsigned int i = 0; i < mosse.size(); i++) {
 
 							//se non è stata ancora fatta una mossa regolare
 							if (!mossaFatta) {
@@ -1181,7 +1181,7 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	//siano tutti vuoti
 	std::vector<Casella> cas = (*pezInizio).getCaselleIntermedie(mossa.getCasellaPartenza(), mossa.getCasellaArrivo());
 
-	for (int i = 0; i < cas.size(); i++) {
+	for (unsigned int i = 0; i < cas.size(); i++) {
 
 		Casella temp = cas[i];
 
@@ -1300,7 +1300,7 @@ bool ChessBoard::reSottoScacco() {
 						std::vector<Casella> cas = (*scacchiera[riga][colonna]).mossePezzo(temp);
 
 						//devo controllare che in nessuno di questi posti ci sia il re bianco
-						for (int i = 0; i < cas.size(); i++) {
+						for (unsigned int i = 0; i < cas.size(); i++) {
 							//se una di queste posizioni è uguale a quella del re bianco
 							if ((cas[i].getColonna() == colonnaReBianco) && (cas[i].getRiga() == rigaReBianco)) {
 								//controllo che tra la posizioni di inizio e di fine non ci siano pezzi in mezzo
@@ -1312,7 +1312,7 @@ bool ChessBoard::reSottoScacco() {
 
 								//se tutte le caselle del vettore intermedie sono vuote allora il re è sotto scacco
 								bool tutteCaselleVuote = true;
-								for (int j = 0; j < intermedie.size(); j++) {
+								for (unsigned int j = 0; j < intermedie.size(); j++) {
 									//se tale casella non è vuota
 									if (scacchiera[intermedie[j].getRiga()][intermedie[j].getColonna()] != nullptr) {
 										tutteCaselleVuote = false;
@@ -1377,7 +1377,7 @@ bool ChessBoard::reSottoScacco() {
 						std::vector<Casella> cas = (*scacchiera[riga][colonna]).mossePezzo(temp);
 
 						//devo controllare che in nessuno di questi posti ci sia il re nero
-						for (int i = 0; i < cas.size(); i++) {
+						for (unsigned int i = 0; i < cas.size(); i++) {
 							//se una di queste posizioni è uguale a quella del re nero
 							if ((cas[i].getColonna() == colonnaReNero) && (cas[i].getRiga() == rigaReNero)) {
 
@@ -1390,7 +1390,7 @@ bool ChessBoard::reSottoScacco() {
 
 								//se tutte le caselle del vettore intermedie sono vuote allora il re è sotto scacco
 								bool tutteCaselleVuote = true;
-								for (int j = 0; j < intermedie.size(); j++) {
+								for (unsigned int j = 0; j < intermedie.size(); j++) {
 									//se tale casella non è vuota
 									if (scacchiera[intermedie[j].getRiga()][intermedie[j].getColonna()] != nullptr) {
 										tutteCaselleVuote = false;
@@ -1516,14 +1516,14 @@ bool ChessBoard::possoFareMosse() {
 
 
 						//scorriamo il vector e guardiamo ogni mossa
-						for (int i = 0; i < mosse.size(); i++) {
+						for (unsigned int i = 0; i < mosse.size(); i++) {
 							Casella fin(mosse[i].getRiga(), mosse[i].getColonna());
 
 							//controlliamo che il pezzo non passi sopra ad altri pezzi nella mossa
 							std::vector<Casella> intermedie = (*scacchiera[riga][colonna]).getCaselleIntermedie(in, fin);
 							//scorriamo il vector di caselle intermedie per capire se sono tutte vuote
 							bool tutteCaselleVuote = true;
-							for (int k = 0; k < intermedie.size(); k++) {
+							for (unsigned int k = 0; k < intermedie.size(); k++) {
 								if (scacchiera[intermedie[k].getRiga()][intermedie[k].getColonna()] != nullptr) {
 									tutteCaselleVuote = false;
 								}
@@ -1707,14 +1707,14 @@ bool ChessBoard::possoFareMosse() {
 
 
 					//scorriamo il vector e guardiamo ogni mossa
-					for (int i = 0; i < mosse.size(); i++) {
+					for (unsigned int i = 0; i < mosse.size(); i++) {
 						Casella fin(mosse[i].getRiga(), mosse[i].getColonna());
 
 						//controlliamo che il pezzo non passi sopra ad altri pezzi nella mossa
 						std::vector<Casella> intermedie = (*scacchiera[riga][colonna]).getCaselleIntermedie(in, fin);
 						//scorriamo il vector di caselle intermedie per capire se sono tutte vuote
 						bool tutteCaselleVuote = true;
-						for (int k = 0; k < intermedie.size(); k++) {
+						for (unsigned int k = 0; k < intermedie.size(); k++) {
 							if (scacchiera[intermedie[k].getRiga()][intermedie[k].getColonna()] != nullptr) {
 								tutteCaselleVuote = false;
 							}

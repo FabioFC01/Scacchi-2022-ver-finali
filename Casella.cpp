@@ -3,7 +3,7 @@
 
 
 //costruttore con argomenti
-Casella::Casella(const int riga, const int col) {
+Casella::Casella(int riga, int col) {
 	//prova a settare la riga con l'arg. passato
 	//se fallisci, imposta il valore -1
 	if (!setRiga(riga)) { setRiga(-1); }
@@ -14,7 +14,7 @@ Casella::Casella(const int riga, const int col) {
 
 }
 
-bool Casella::setRiga(const int ri) {
+bool Casella::setRiga(int ri) {
 	//controllo che la riga non sia
 	//fuori dalla scacchiera
 	if (ri < 0 || ri > 7) {
@@ -27,7 +27,7 @@ bool Casella::setRiga(const int ri) {
 //setColonna
 	//ritorna true se la colonna
 	//è dentro la scacchiera
-bool Casella::setColonna(const int col) {
+bool Casella::setColonna(int col) {
 	//controllo che la riga non sia
 	//fuori dalla scacchiera
 	if (col < 0 || col > 7) {

@@ -26,7 +26,7 @@ public:
 	}
 
 	//costruttore con argomenti
-	Casella(const int riga, const int col);
+	Casella(int riga,  int col);
 
 
 
@@ -34,7 +34,7 @@ public:
 	//setRiga
 	//ritorna true se la riga
 	//è dentro la scacchiera
-	bool setRiga(const int ri);
+	bool setRiga( int ri);
 
 	//ritorna il valore della riga
 	//da 0 a 7
@@ -46,7 +46,7 @@ public:
 	//setColonna
 	//ritorna true se la colonna
 	//è dentro la scacchiera
-	bool setColonna(const int col);
+	bool setColonna(int col);
 
 
 	//ritorna l'indice di colonna

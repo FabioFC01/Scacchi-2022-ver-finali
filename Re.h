@@ -2,6 +2,7 @@
 #define Re_h
 
 #include "Pezzo.h"
+#include "Casella.h"
 #include <iostream>
 
 using namespace std;

@@ -177,6 +177,7 @@ public:
 
 	//funzione che controlla tutto quello che c'è da controllare per
 	//verificare la correttezza di tale mossa
+	//se la mossa è corretta viene eseguito
 	bool mossaFattibile(const Mossa& prossimaMossa);
 
 

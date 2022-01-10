@@ -30,10 +30,7 @@ public:
 
 
 	//costruttore
-	Player(const bool bianco_, const bool giocUmano ) {
-		bianco = bianco_;
-		umano = giocUmano;
-	}
+	Player(const bool bianco_, const bool giocUmano);
 
 
 

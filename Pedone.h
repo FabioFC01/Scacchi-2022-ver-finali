@@ -7,7 +7,6 @@
 
 #include <vector>
 
-using namespace std;
 
 class Pedone : public Pezzo {
 	//classe del pezzo Pedone

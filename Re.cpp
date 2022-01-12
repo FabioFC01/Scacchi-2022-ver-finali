@@ -59,7 +59,7 @@ bool Re::move(const Casella inizio, const Casella arrivo, const bool cattura) {
 //il re si muove soltanto nelle caselle adiacenti, quindi non bisogna controllare nulla
 std::vector<Casella> Re::getCaselleIntermedie(const Casella inizio, const Casella fine) {
 
-	return vector<Casella> ();
+	return std::vector<Casella> ();
 
 }
 

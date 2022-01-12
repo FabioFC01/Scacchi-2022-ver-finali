@@ -5,3 +5,14 @@ Mossa::Mossa(Casella part, Casella arr) {
 	arrivo = arr;
 
 }
+
+//assegnamento di copia
+Mossa& Mossa::operator= (const Mossa& a) {
+
+
+	partenza = a.getCasellaPartenza();;
+	arrivo = a.getCasellaArrivo();;
+
+	return *this;
+
+}

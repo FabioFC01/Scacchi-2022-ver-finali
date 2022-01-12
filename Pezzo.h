@@ -10,6 +10,7 @@
 
 
 
+class Casella;
 
 class Pezzo {
 	//classe di un pezzo casuale

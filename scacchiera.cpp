@@ -23,7 +23,7 @@ int main()
     //scacchi.partita_1();
 
 
-    scacchi.partita_2();
+    scacchi.partita();
     
 
    
@@ -181,6 +181,9 @@ xx
 // https://www.geeksforgeeks.org/design-a-chess-game/
 // 
 // https://inst.eecs.berkeley.edu/~cs162/sp07/Nachos/chess.shtml
+// 
+// 
+// http://www.unife.it/scienze/informatica/insegnamenti/programmazione-e-laboratorio/materiale-didattico-anni-precedenti/materiale-didattico-a-a-2016-17/diapositive/160-argomenti-della-linea-di-comando
 // 
 // 
 //link con idee carine da prendere direi

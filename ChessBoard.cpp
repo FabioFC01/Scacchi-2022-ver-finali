@@ -73,6 +73,11 @@ ChessBoard::ChessBoard() {
 
 
 	
+	//per avere i numeri random dopo
+	srand(time(NULL));
+
+	//mappa
+	std::map<string, int> mappa;
 
 
 	
@@ -172,6 +177,49 @@ void ChessBoard::stampa() const {
 
 }
 
+//metodo che traduce la scacchiera in una singola stringa
+string ChessBoard::scacchieraInStringa() const {
+
+	//stringa da ritornare
+	string ret;
+
+	for (int riga = 7; riga >= 0; riga--) {
+		for (int colonna = 0; colonna < 8; colonna++) {
+			//se c'è un pezzo bisogna aggiungere il simbolo
+			if ((scacchiera[riga][colonna]) != nullptr) {
+				ret += (*scacchiera[riga][colonna]).getSimbolo();
+			}
+			//se non c'è nessun pezzo aggiungi uno spazio
+			else {
+				ret += " ";
+			}
+
+		}
+	}
+
+
+	return ret;
+}
+
+//metodo che conta il numero dei pezzi nella scacchiera
+int ChessBoard::contaPezzi() {
+
+	int numeroPezzi = 0;
+
+	for (int riga = 0; riga < 8; riga++) {
+		for (int colonna = 0; colonna < 8; colonna++) {
+			if (scacchiera[riga][colonna] != nullptr) {
+				numeroPezzi++;
+			}
+		}
+
+	}
+
+	return numeroPezzi;
+
+
+}
+
 
 //metodo per chiedere e ottenere l'input per la successiva mossa
 //del giocatore umano
@@ -189,6 +237,13 @@ Mossa ChessBoard::input() {
 		std::cout << "Inserisci input :   ";
 		getline(cin, in);   //B1 C2
 
+		//controlla che ci sia una richiesta di stampare
+		//a video la scacchiera
+		if (in == "XX XX") {
+			stampa();
+		}
+
+
 
 		//controlla che la lunghezza sia corretta e che
 		//all'indice 2 ci sia uno spazio
@@ -199,6 +254,10 @@ Mossa ChessBoard::input() {
 		else {
 			idoneo = false;
 		}
+
+		
+
+
 
 
 
@@ -302,8 +361,47 @@ void ChessBoard::sceltaPartita() {
 
 }
 
+string ChessBoard::coordinateInTesto(Mossa m) {
+	string ret = "";
 
-void ChessBoard::faiMossa() {
+	int temp;
+
+	temp = m.getCasellaPartenza().getColonna();	//da 0 a 7
+	
+	
+
+	char carattere = char(temp + 65);
+
+
+	//aggiunta alla stringa della colonna di partenza
+	ret += carattere;
+
+
+	temp = m.getCasellaPartenza().getRiga();	//da 0 a 7
+	
+	//0 deve diventare 1
+	carattere = char(temp + 49);
+	//aggiunta della riga di partenza
+	ret += carattere;
+
+	temp = m.getCasellaArrivo().getColonna();	//da 0 a 7
+	carattere = char(temp + 65);
+	ret += carattere;
+
+	temp = m.getCasellaArrivo().getRiga();	//da 0 a 7
+	carattere = char(temp + 49);
+	ret += carattere;
+
+
+	return ret;
+
+
+
+
+}
+
+
+bool ChessBoard::faiMossa() {
 
 	//mettiamo il contatore di caselle controllare qui cosi
 	//poi faccio il cout
@@ -330,12 +428,19 @@ void ChessBoard::faiMossa() {
 				//controlla se è fattibile, nel caso esegui la mossa
 				mossaCorretta = mossaFattibile(prossimaMossa);
 			}
+			//mossa è stata fatta
+			string m = coordinateInTesto(prossimaMossa);
+			char simbolo = (*scacchiera[prossimaMossa.getCasellaArrivo().getRiga()][prossimaMossa.getCasellaArrivo().getColonna()]).getSimbolo();
+
+			std::cout << "Il bianco muove "<< simbolo  << " da  " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
+
+			return   ((simbolo == 'p') || (simbolo == 'P'));
 		}
 
 		//se invece il giocatore non è umano
 		else {
 
-			srand(time(NULL));
+			
 
 			//spara un numero a caso tra 0 e 63
 			int casellaIniziale = rand() % 64;
@@ -443,9 +548,23 @@ void ChessBoard::faiMossa() {
 								//la mossa è stata fatta
 								mossaFatta = mossaFattibile(mossaDaProvare);
 
+								//se la mossa è appena stata fatta
+								if (mossaFatta) {
+									//mossa è stata fatta
+									string m = coordinateInTesto(mossaDaProvare);
+
+									char simbolo = (*scacchiera[mossaDaProvare.getCasellaArrivo().getRiga()][mossaDaProvare.getCasellaArrivo().getColonna()]).getSimbolo();
+
+									std::cout << "Il bianco muove " << simbolo << " da " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
+									return   ((simbolo == 'p') || (simbolo == 'P'));
+
+								}
+
 
 
 							}
+
+							
 
 
 
@@ -486,8 +605,8 @@ void ChessBoard::faiMossa() {
 			}
 			//fuori dal while (!mossaFatta)
 
-
-			cout << endl << caselleAnalizzate << endl;
+			return false;
+			
 
 
 
@@ -552,6 +671,15 @@ void ChessBoard::faiMossa() {
 				//controlla se è fattibile, nel caso esegui la mossa
 				mossaCorretta = mossaFattibile(prossimaMossa);
 			}
+			//mossa è stata fatta
+			string m = coordinateInTesto(prossimaMossa);
+
+			char simbolo = (*scacchiera[prossimaMossa.getCasellaArrivo().getRiga()][prossimaMossa.getCasellaArrivo().getColonna()]).getSimbolo();
+
+			std::cout << "Il nero muove " << simbolo <<" da " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
+			return   ((simbolo == 'p') || (simbolo == 'P'));
+			
+
 		}
 
 		//se invece il giocatore nero è pc
@@ -559,7 +687,7 @@ void ChessBoard::faiMossa() {
 
 
 
-			srand(time(NULL));
+			
 
 			//spara un numero a caso tra 0 e 63
 			int casellaIniziale = rand() % 64;
@@ -676,6 +804,17 @@ void ChessBoard::faiMossa() {
 								//la mossa è stata fatta
 								mossaFatta = mossaFattibile(mossaDaProvare);
 
+								//se la mossa è stata appena fatta
+								if (mossaFatta) {
+									//mossa è stata fatta
+									string m = coordinateInTesto(mossaDaProvare);
+
+									char simbolo = (*scacchiera[mossaDaProvare.getCasellaArrivo().getRiga()][mossaDaProvare.getCasellaArrivo().getColonna()]).getSimbolo();
+
+									std::cout << "Il nero muove " << simbolo << " da " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
+									return   ((simbolo == 'p') || (simbolo == 'P'));
+								}
+
 
 
 							}
@@ -719,7 +858,8 @@ void ChessBoard::faiMossa() {
 			}
 			//fuori dal while (!mossaFatta)
 
-			cout << endl << caselleAnalizzate << endl;
+			return false;
+			
 
 			
 
@@ -741,46 +881,40 @@ void ChessBoard::faiMossa() {
 
 
 
-
-//metodo principale che gestisce la partita
-void ChessBoard::partita() {
-	
-
-	
-
-
-
-
-
-
-
-
-
-}
-
-
-//gestione della partita pc - pc
-void  ChessBoard::partita_1() {
-
-
-
-}
-
-
-
-
-
-
-
 //gestione partita giocatore-giocatore
-void ChessBoard::partita_2() {
+void ChessBoard::partita() {
 
+	//contatore di mosse nella partita
+	int mossePartita = 0;
+
+	//contatore del numero di mosse da quando non c'è stata una cattura di un pezzo
+	int mosseSenzaCattura = 0;
+
+	//contatore del numero di mosse fatte senza spostare un pedone
+	int mossePedNonSpostati = 0;
 
 
 	
 	
 	//finchè la partita non è terminata
 	while (statoPartita == Attiva) {
+
+		//interi per contare il numero dei pezzi nella scacchiera
+		//prima e dopo la mossa
+		int pezziPrima = contaPezzi();
+		int pezziDopo = 0;
+
+		
+
+
+
+
+
+
+		//se è turno del bianco mettiamo una riga divisoria
+		if (turno) {
+			std::cout << " ------------------------------------------------- " << endl;
+		}
 
 		//controlla che il giocatore possa fare mosse
 		if (!possoFareMosse()) {
@@ -790,72 +924,124 @@ void ChessBoard::partita_2() {
 				statoPartita = ScaccoMatto;
 
 				if (turno) {
-					cout << "SCACCO MATTO !!! " << endl;
-					cout << "Il nero vince" << endl;
+					std::cout << "SCACCO MATTO !!! " << endl;
+					std::cout << "Il nero vince" << endl;
 				}
 				else {
-					cout << "SCACCO MATTO !!! " << endl;
-					cout << "Il bianco vince" << endl;
+					std::cout << "SCACCO MATTO !!! " << endl;
+					std::cout << "Il bianco vince" << endl;
 				}
 
 			}
 			else {
 				statoPartita = Stallo;
 				if (turno) {
-					cout << "STALLO !!! " << endl;
-					cout << "Il nero vince" << endl;
+					std::cout << "STALLO !!! " << endl;
+					std::cout << "Il nero vince" << endl;
 				}
 				else {
-					cout << "STALLO !!! " << endl;
-					cout << "Il bianco vince" << endl;
+					std::cout << "STALLO !!! " << endl;
+					std::cout << "Il bianco vince" << endl;
 				}
-
-
 			}
-
-
 		}
 
+		
+
+
+		bool pedoneMosso = false;
+
 		//se sei qui il giocatore di questo turno può fare mosse
-
-
-
-
-
-
 		if (statoPartita == Attiva) {
 
 
 			//fai fare la mossa al giocatore
-			faiMossa();
+			pedoneMosso = faiMossa();
+			//incremento mosse
+			mossePartita++;
 
 
-
-			/*
-			//input
-			Mossa prossimaMossa = input();
-
-			//controlla che tale mossa sia corretta
-			//nel caso lo sia eseguila
-			bool mossaCorretta = mossaFattibile(prossimaMossa);
-
-			while (!mossaCorretta) {
-				//richiedi altro input
-				prossimaMossa = input();
-				//controlla se è fattibile, nel caso esegui la mossa
-				mossaCorretta = mossaFattibile(prossimaMossa);
-			}
-			*/
-
-			stampa();
+			//stampa();
 			cambiaTurno();
 
 		}
 
+		//conta il numero dei pezzi dopo la mossa
+		pezziDopo = contaPezzi();
+		if (pezziPrima != pezziDopo) {
+			mosseSenzaCattura = 0;
+		}
+		//incremento
+		mosseSenzaCattura++;
 
-	//fine while (statoPartita == Attiva)
+		//se hai sposato un pedone azzeri il contatore
+		if (pedoneMosso) {
+			mossePedNonSpostati = 0;
+		}
+		//in ogni caso lo incrementi
+		mossePedNonSpostati++;
+
+		//se uno dei due contatori appena visti eguaglia o supera
+		//i 50 la partita si conclude con una patta
+		if (mosseSenzaCattura >= 50) {
+			statoPartita = Patta;
+			cout << "Partita conclusa con una patta perche' non si catturano pezzi da 50 mosse" << endl;
+		}
+		if (mossePedNonSpostati >= 50) {
+			statoPartita = Patta;
+			cout << "Partita conclusa con una patta perche' non si muovono pedoni da 50 mosse" << endl;
+		}
+
+
+
+		// ------------------------------------------------------------
+
+		//mappa per fare patta se una certa posizione dei pezzi
+		//nella scacchiera si ripresenta per la terza volta
+		int valoreRitorno = 0;
+
+		//stringa dove ci sono tutti i simboli dei pezzi
+		//nella loro posizione attuale
+		string board = scacchieraInStringa();
+
+		auto it = mappa.find(board);
+
+		//se è stato trovato un elemento
+		if (it != mappa.end()) {
+			//se quella configurazione si è verificata almeno
+			//altre due volte in passato (e quindi questa è la terza)
+			//la partita termina con una patta
+			if (it->second >= 2) {
+				statoPartita = Patta;
+				cout << "Partita conclusa perche' si è verificata la stessa configurazione della scacchiera per tre volte" << endl;
+			}
+			else {
+				valoreRitorno = it->second;
+				mappa.insert({ board, valoreRitorno + 1 });
+			}
+
+		}
+		//se non è stato trovato nessun elemento
+		else {
+			mappa.insert({ board, 1 });
+		}
+
+		// --------------------------------------------------
+
+		//fermiamo il gioco tra due pc se
+			//è stato superato il limite di mosse
+		if ((tipoPartita == 1) && (mossePartita >= maxMossePc)) {
+
+			statoPartita = Patta;
+			std::cout << "Partita annullata per superamento delle mosse massime" << endl;
+
+		}
+
+
+
+	
 	}
-		
+	//fuori while (statoPartita == Attiva)	
 
 
 
@@ -991,72 +1177,6 @@ void ChessBoard::resetScacchiera() {
 	scacchiera[0][7] = tor2B;
 	scacchiera[7][0] = tor1N;
 	scacchiera[7][7] = tor2N;
-
-
-
-	// ORA CHE SONO STATI INIZIALIZZATI TUTTI I PEZZI
-	//CREIAMO I VECTOR PER I DUE GIOCATORI CON I VARI PEZZI
-
-	
-	/*
-	//Pedoni
-	giocBianco.push_back(ped1B);
-	giocBianco.push_back(ped2B);
-	giocBianco.push_back(ped3B);
-	giocBianco.push_back(ped4B);
-	giocBianco.push_back(ped5B);
-	giocBianco.push_back(ped6B);
-	giocBianco.push_back(ped7B);
-	giocBianco.push_back(ped8B);
-
-	giocNero.push_back(ped1N);
-	giocNero.push_back(ped2N);
-	giocNero.push_back(ped3N);
-	giocNero.push_back(ped4N);
-	giocNero.push_back(ped5N);
-	giocNero.push_back(ped6N);
-	giocNero.push_back(ped7N);
-	giocNero.push_back(ped8N);
-
-	//re
-	giocBianco.push_back(rB);
-	giocNero.push_back(rN);
-
-	//regina
-	giocBianco.push_back(regB);
-	giocNero.push_back(regN);
-
-	//cavalli
-	giocBianco.push_back(cav1B);
-	giocBianco.push_back(cav2B);
-	giocNero.push_back(cav1N);
-	giocNero.push_back(cav2N);
-
-	//alfieri
-	giocBianco.push_back(alf1B);
-	giocBianco.push_back(alf2B);
-	giocNero.push_back(alf1N);
-	giocNero.push_back(alf2N);
-
-	//torri
-	giocBianco.push_back(tor1B);
-	giocBianco.push_back(tor2B);
-	giocNero.push_back(tor1N);
-	giocNero.push_back(tor2N);
-
-	// i due vettori sono stati completati
-	*/
-
-
-
-
-
-
-
-
-	
-
-
 
 }
 

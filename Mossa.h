@@ -4,8 +4,6 @@
 //per poter indicare le caselle di partenza
 //e arrivo della mossa
 #include "Casella.h"
-#include "Pezzo.h"
-#include "Player.h"
 
 
 
@@ -51,6 +49,9 @@ public:
 	Casella getCasellaArrivo() const {
 		return arrivo;
 	}
+
+	//assegnamento di copia
+	Mossa& operator= (const Mossa& a);
 
 
 

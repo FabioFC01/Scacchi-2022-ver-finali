@@ -5,7 +5,6 @@
 #include "Casella.h"
 #include <iostream>
 
-using namespace std;
 
 class Re : public Pezzo {
 	//classe del pezzo Re

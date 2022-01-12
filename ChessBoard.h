@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 
 #include "Pezzo.h"
@@ -27,7 +28,6 @@
 #include <time.h>       /* time */
 
 
-using namespace std;
 
 class ChessBoard {
 	//classe con la scacchiera, gestione dei pezzi
@@ -123,6 +123,17 @@ private:
 
 
 
+	//limite massimo di mosse per una partita tra due pc
+	const int maxMossePc = 800;
+
+
+	//mappa per tenere memoria delle varie posizioni dei
+	//pezzi nella scacchiera durante la partita
+	std::map<string, int> mappa;
+
+
+
+
 public:
 	ChessBoard();	//costruttore
 
@@ -150,23 +161,20 @@ public:
 	*/
 	void partita(); 
 
-	//gestione della partita pc - pc
-	void partita_1();
-
-
-
-
-	//metodo che dopo toglierò 
-	//partita giocatore-giocatore
-	void partita_2();
-
 
 	//metodo stampa
 	void stampa() const;
+
+	//metodo per tradurre la scacchiera in una stringa
+	string scacchieraInStringa() const;
 	
 
 	//metodo per chiedere al giocatore umano l'input per la mossa
 	Mossa input();
+
+	//funzione che prende una mossa e ridà una stringa
+	//con le coordinate in lettere e numeri
+	string coordinateInTesto(Mossa m);
 
 
 	//metodo per controllare che l'input per il movimento sia corretto
@@ -221,9 +229,16 @@ public:
 		Se il giocatore è pc cerca nella scacchiera un pezzo del suo colore
 		e cerca di fare una mossa legale, sennò cerca altri pezzi e
 		rifà lo stesso procedimento fino a quando riesce a fare una mossa legale
-	
+
+		ritorna un valore true se è stato spostato un pedone
+		false altrimenti
 	*/
-	void faiMossa();
+	bool faiMossa();
+
+
+	//metodo per contare quanti pezzi ci sono nella scacchiera
+	int contaPezzi();
+
 
 
 

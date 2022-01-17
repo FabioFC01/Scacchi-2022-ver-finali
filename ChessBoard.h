@@ -135,7 +135,7 @@ private:
 
 
 public:
-	ChessBoard();	//costruttore
+	ChessBoard(string arg);	//costruttore
 
 
 
@@ -152,7 +152,7 @@ public:
 
 
 
-	void sceltaPartita();
+	void sceltaPartita(string arg);
 
 
 	/*

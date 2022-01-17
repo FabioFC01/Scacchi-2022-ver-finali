@@ -80,7 +80,6 @@ private:
 	bool catturato;
 
 
-		
 
 
 

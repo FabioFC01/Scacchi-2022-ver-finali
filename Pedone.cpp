@@ -194,7 +194,8 @@ std::vector<Casella> Pedone::mossePezzo(const Casella inizio) {
 		if (primaMossa) {
 			temp.setRiga(rigaInizio + 2);
 			temp.setColonna(colonnaInizio);
-			if (temp.setRiga(rigaInizio + 2) && temp.setColonna(colonnaInizio)) {
+			//se la casella di fine è dentro la scacchiera e non ci sono pezzi
+			if (temp.setRiga(rigaInizio + 2) && temp.setColonna(colonnaInizio)){
 				cas.push_back(temp);
 			}
 		}
@@ -214,7 +215,6 @@ std::vector<Casella> Pedone::mossePezzo(const Casella inizio) {
 		}
 
 		//se nella posizione in alto a dx c'è un pezzo avversario
-		//verrà controllato nel metodo chiamante
 		temp.setRiga(rigaInizio + 1);
 		temp.setColonna(colonnaInizio + 1);
 		if (temp.setRiga(rigaInizio + 1) && temp.setColonna(colonnaInizio + 1)) {

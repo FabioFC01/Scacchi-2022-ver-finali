@@ -3,32 +3,29 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
-    
     //formazione scacchiera
 
 
-    ChessBoard scacchi;
+    string temp = "";
+
+    if (argc == 2) {
+        temp = argv[1];
+    }
+
+
+
+    ChessBoard scacchi(temp);
 
     scacchi.stampa();
 
-    
 
 
-    //scacchi.sceltaPartita();
-
-
-    //ad es una delle due
-    //scacchi.partita_1();
 
 
     scacchi.partita();
     
-
-   
-
-
 
 
     cout << "fine programma" << endl;

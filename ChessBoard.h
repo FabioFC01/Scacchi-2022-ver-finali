@@ -2,6 +2,7 @@
 #define CHESSBOARD_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <map>
@@ -232,8 +233,10 @@ public:
 
 		ritorna un valore true se è stato spostato un pedone
 		false altrimenti
+
+		ritorna la mossa fatta
 	*/
-	bool faiMossa();
+	Mossa faiMossa();
 
 
 	//metodo per contare quanti pezzi ci sono nella scacchiera

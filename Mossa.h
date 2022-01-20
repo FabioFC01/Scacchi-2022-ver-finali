@@ -24,22 +24,12 @@ private:
 
 
 
-
-	//Pezzo mosso;
-
-	//ammesso che ci sia
-	//Pezzo catturato;
-
-
-
-
-
-
-
-
-
 public:
 	//costruttore
+	Mossa () {
+		partenza = Casella();
+		arrivo = Casella();
+	}
 	Mossa(Casella part, Casella arr);
 
 	Casella getCasellaPartenza() const {
@@ -50,8 +40,20 @@ public:
 		return arrivo;
 	}
 
+	void setCasellaPartenza(Casella par);
+	void setCasellaArrivo(Casella arr);
+
 	//assegnamento di copia
 	Mossa& operator= (const Mossa& a);
+
+	//costruttore di copia
+	Mossa(Mossa& a);
+
+	//assegnamento move
+	Mossa& operator= (Mossa&& a);
+
+	//costruttore move
+	Mossa(Mossa&& a);
 
 
 

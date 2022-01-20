@@ -410,7 +410,7 @@ string ChessBoard::coordinateInTesto(Mossa m) {
 }
 
 
-bool ChessBoard::faiMossa() {
+Mossa ChessBoard::faiMossa() {
 
 	//mettiamo il contatore di caselle controllare qui cosi
 	//poi faccio il cout
@@ -438,12 +438,14 @@ bool ChessBoard::faiMossa() {
 				mossaCorretta = mossaFattibile(prossimaMossa);
 			}
 			//mossa è stata fatta
+
 			string m = coordinateInTesto(prossimaMossa);
+
 			char simbolo = (*scacchiera[prossimaMossa.getCasellaArrivo().getRiga()][prossimaMossa.getCasellaArrivo().getColonna()]).getSimbolo();
 
 			std::cout << "Il bianco muove "<< simbolo  << " da  " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
 
-			return   ((simbolo == 'p') || (simbolo == 'P'));
+			return   prossimaMossa;
 		}
 
 		//se invece il giocatore non è umano
@@ -574,7 +576,7 @@ bool ChessBoard::faiMossa() {
 									char simbolo = (*scacchiera[mossaDaProvare.getCasellaArrivo().getRiga()][mossaDaProvare.getCasellaArrivo().getColonna()]).getSimbolo();
 
 									std::cout << "Il bianco muove " << simbolo << " da " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
-									return   ((simbolo == 'p') || (simbolo == 'P'));
+									return   mossaDaProvare;
 
 								}
 
@@ -625,51 +627,8 @@ bool ChessBoard::faiMossa() {
 			}
 			//fuori dal while (!mossaFatta)
 
-			return false;
-			
-
-
-
-
-			/*
-				DA IMPLEMENTARE IL PC
-				CHE FA UNA DELLE MOSSE POSSIBILI SCEGLIENDO A CASO
-
-				scorri tutta la scacchiera partendo da una casella e prendendo 
-				una direzione casuale (aumenta o diminuisci)
-
-				ogni volta che trovi in una tale casella della scacchiera un pezzo 
-				del tuo stesso colore devi chiamare il metodo mossePezzo,
-				prendere tutte le caselle che ti sono arrivate (ricordati di togliere 
-				quelle eventualmente sbagliate dei pedoni)
-				e prova, una casella per volta, a fare una mossa e vedere se è legale
-				con il metodo mossaFattibile
-
-				se finisci il vector senza aver trovato una mossa fattibile allora
-				passa ad un'altra casella 
-
-				passa tutta la scacchiera così
-
-				se arrivi in fondo alla scacchiera riprendi da dove eri partito 
-				inizialmente e procedi nella direzione opposta fino all'ultima casella
-				della scacchiera disponibile
-
-				dovresti trovare almeno una mossa fattibile dato che prima di arrivare
-				qui è stato chiamato il metodo possoFareMosse
-			
-			*/
-
 		}
 		//fuori dall'else (giocatore bianco non umano)
-
-
-
-
-
-
-
-
-
 
 	}
 	//se invece è turno del nero
@@ -697,7 +656,7 @@ bool ChessBoard::faiMossa() {
 			char simbolo = (*scacchiera[prossimaMossa.getCasellaArrivo().getRiga()][prossimaMossa.getCasellaArrivo().getColonna()]).getSimbolo();
 
 			std::cout << "Il nero muove " << simbolo <<" da " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
-			return   ((simbolo == 'p') || (simbolo == 'P'));
+			return   prossimaMossa;
 			
 
 		}
@@ -841,7 +800,7 @@ bool ChessBoard::faiMossa() {
 									char simbolo = (*scacchiera[mossaDaProvare.getCasellaArrivo().getRiga()][mossaDaProvare.getCasellaArrivo().getColonna()]).getSimbolo();
 
 									std::cout << "Il nero muove " << simbolo << " da " << m[0] << m[1] << " a " << m[2] << m[3] << endl;
-									return   ((simbolo == 'p') || (simbolo == 'P'));
+									return   mossaDaProvare;
 								}
 
 
@@ -887,7 +846,6 @@ bool ChessBoard::faiMossa() {
 			}
 			//fuori dal while (!mossaFatta)
 
-			return false;
 			
 
 			
@@ -921,6 +879,13 @@ void ChessBoard::partita() {
 
 	//contatore del numero di mosse fatte senza spostare un pedone
 	int mossePedNonSpostati = 0;
+
+
+	//apertura flusso uscita
+	//ofstream
+	ofstream out;
+	//apertura flusso
+	out.open("Partita.txt");
 
 
 	
@@ -979,13 +944,30 @@ void ChessBoard::partita() {
 
 
 		bool pedoneMosso = false;
+		
+		Mossa mossaFatta;
 
 		//se sei qui il giocatore di questo turno può fare mosse
 		if (statoPartita == Attiva) {
 
 
 			//fai fare la mossa al giocatore
-			pedoneMosso = faiMossa();
+			mossaFatta = faiMossa();
+
+			//mossaFatta.setCasellaPartenza(mossa.getCasellaPartenza());
+			//mossaFatta.setCasellaArrivo(mossa.getCasellaArrivo());
+
+			//controlliamo se è stato mosso un pedone
+			char c = (*scacchiera[mossaFatta.getCasellaArrivo().getRiga()][mossaFatta.getCasellaArrivo().getColonna()]).getSimbolo();
+			if (  c == 'p'   ||  c == 'P') {
+				pedoneMosso = true;
+			}
+
+			//scrittura mossa su file
+			string m = coordinateInTesto(mossaFatta);
+			out << m[0] << m[1] << " " << m[2] << m[3] << endl;
+
+
 			//incremento mosse
 			mossePartita++;
 
@@ -1012,15 +994,11 @@ void ChessBoard::partita() {
 
 		//se uno dei due contatori appena visti eguaglia o supera
 		//i 50 la partita si conclude con una patta
-		if (mosseSenzaCattura >= 50) {
+		if (mosseSenzaCattura >= 100  && mossePedNonSpostati >= 100) {
 			statoPartita = Patta;
-			cout << "Partita conclusa con una patta perche' non si catturano pezzi da 50 mosse" << endl;
+			cout << "Partita conclusa con una patta perche' : " << endl
+			     << "le ultime 50 mosse consecutive sono state fatte da ciascun giocatore senza il movimento di alcun pedone e senza alcuna cattura" << endl;
 		}
-		if (mossePedNonSpostati >= 50) {
-			statoPartita = Patta;
-			cout << "Partita conclusa con una patta perche' non si muovono pedoni da 50 mosse" << endl;
-		}
-
 
 
 		// ------------------------------------------------------------
@@ -1073,11 +1051,13 @@ void ChessBoard::partita() {
 	//fuori while (statoPartita == Attiva)	
 
 
+	out.close();
+
 
 		
 }	//fine del movimento di un singolo pezzo
 	
-	//fine partita 2
+	//fine partita
 
 
 

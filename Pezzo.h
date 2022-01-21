@@ -58,7 +58,6 @@ private:
 				G	6
 				H	7
 
-
 	
 	*/
 	
@@ -73,16 +72,6 @@ private:
 	char simbolo;
 
 
-	//valore booleano che indica se il pezzo
-	// è stato catturato
-	//viene inizializzato a false
-	//nel caso in cui il pezzo venga catturato diventa true
-	bool catturato;
-
-
-
-
-
 
 public:
 	//setta il colore
@@ -92,13 +81,7 @@ public:
 	//1 per i bianchi, 0 per i neri
 	bool getColore() const { return colore; }
 
-	//metodi per il pezzo attivo
-	void setCatturato(const bool c);
-	//1 se è stato catturato, 0 altrimenti
-	bool getCatturato() const { return catturato; }
-
-
-	bool dentroScacchiera(const int rig, const int col);
+	bool dentroScacchiera(const int rig, const int col) const;
 
 	//metodi per i simboli dei pezzi
 	//bianchi minuscoli, neri maiuscoli
@@ -114,12 +97,6 @@ public:
 	//metodo virtuale che, data una casella di partenza, dà un elenco di posizioni 
 	//nelle quali il pezzo può spostarsi (considerando una scacchiera vuota)
 	virtual std::vector<Casella> mossePezzo(const Casella inizio) = 0;
-	
-
-
-
-
-
 
 
 	//METODO MOVE

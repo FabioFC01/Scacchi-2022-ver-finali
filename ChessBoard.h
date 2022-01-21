@@ -101,22 +101,10 @@ private:
 	*/
 	bool turno;
 
-
-	//valore booleano per capire se si è arrivati allo scacco matto
-	//inizializzato a false, diventa true se si verifica la situazione di scacco matto
-	bool scaccoMatto;
-
-
-	//valore booleano che mi serve a capire se la partita è terminata
-	bool partitaTerminata;
-
+	//stato della partita
 	enum stato { Attiva = 0, ScaccoMatto = 1, Stallo = 2, Patta = 3 };
 	stato statoPartita;
 
-
-	//vettori con i vari pezzi
-	//std::vector<Pezzo*> giocBianco;
-	//std::vector<Pezzo*> giocNero;
 
 
 	Player giocBianco;
@@ -139,20 +127,12 @@ public:
 	ChessBoard(string arg);	//costruttore
 
 
-
+	//inizializza la scacchiera
 	void resetScacchiera();
 
-	Pezzo* getPezzo(int rig, int col) const;
 
 
-
-
-	//funzione di chiamata per il move
-	bool call(Pezzo* pez, const Casella inizio, const Casella arrivo, const bool cattura);
-
-
-
-
+	//metodo per scegliere la partita se non specificato da riga di comando
 	void sceltaPartita(string arg);
 
 

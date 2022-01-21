@@ -57,10 +57,10 @@ public:
 
 	//metodo che controlla se questa casella è dentro
 	//la scacchiera o fuori
-	//molto importante specie perchè 
-	//il valore di default è -1
 	bool casellaValida() const;
 
+	//metodo che controlla se questa casella è dentro
+	//la scacchiera o fuori (controlla gli argomenti)
 	bool casellaValida(const int riga, const int col);
 
 

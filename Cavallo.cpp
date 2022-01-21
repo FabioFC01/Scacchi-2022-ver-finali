@@ -3,7 +3,6 @@
 //costruttore
 Cavallo::Cavallo(const bool color) {
 	setColore(color);
-	setCatturato(false);
 
 
 	//bianco

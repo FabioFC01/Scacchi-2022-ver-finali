@@ -12,9 +12,6 @@ Pedone::Pedone( const bool color) {
 	//per inizializzare il colore
 	setColore(color);
 
-	setCatturato(false);
-
-
 
 	//bianco
 	if (getColore()) {

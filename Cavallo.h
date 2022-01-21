@@ -11,16 +11,9 @@ class Cavallo : public Pezzo {
 
 private:
 
-
-
-
-
-
 public:
 	//costruttore
 	Cavallo(const bool color);
-	//color true per bianco
-	//false per nero
 
 	//metodo move della classe Pezzo
 	bool move(const Casella inizio, const Casella arrivo, const bool cattura) override;

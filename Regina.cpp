@@ -3,8 +3,6 @@
 //costruttore
 Regina::Regina(const bool color) {
 	setColore(color);
-	setCatturato(false);
-
 
 	//bianco
 	if (getColore()) {

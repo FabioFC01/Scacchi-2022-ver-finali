@@ -3,7 +3,6 @@
 using namespace std;
 Alfiere::Alfiere(const bool color) {
 	setColore(color);
-	setCatturato(false);
 
 	//bianco
 	if (getColore()) {

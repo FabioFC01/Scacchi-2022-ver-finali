@@ -66,8 +66,7 @@ ChessBoard::ChessBoard(string arg) {
 	//inizializziamo il booleano turno a 1
 	//significa che è il turno del bianco
 	turno = 1;
-	scaccoMatto = 0;
-	partitaTerminata = 0;
+
 	statoPartita = Attiva;
 
 
@@ -1057,38 +1056,7 @@ void ChessBoard::partita() {
 		
 }	//fine del movimento di un singolo pezzo
 	
-	//fine partita
-
-
-
-
-
-
-
-
-
-
-//metodo per ottenere una det. pezzo
-	//date le coordinate
-Pezzo* ChessBoard::getPezzo(int rig, int col) const {
-	//se la casella scelta è fuori dalla scacchiera
-	if (rig < 0 || rig > 7 || col < 0 || col > 7) {
-		throw new Exception("error: out of bounds");
-	}
-
-	return scacchiera[rig][col];
-
-}
-
-
-//funzione di chiamata alla funzione move
-bool   ChessBoard::call(Pezzo* pez, const Casella inizio, const Casella arrivo, const bool cattura) {
-
-	return  (*pez).move(inizio,arrivo,cattura);
-
-}
-
-
+	//fine metodo partita
 
 
 

@@ -1223,7 +1223,8 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 												// turno ha 1 per i bianchi, 0 per i neri
 	//se il colore non è lo stesso di chi ha il turno la mossa è errata
 	if (colorePezzoPartenza != turno) {
-		//delete pezInizio;
+		pezInizio = nullptr;
+		delete pezInizio;
 		return false;
 	}
 
@@ -1238,6 +1239,8 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 
 		//se i due colori combaciano la mossa non è corretta
 		if (colorePezzoPartenza == colorePezzoArrivo) {
+			pezInizio = nullptr;
+			delete pezInizio;
 			return false;
 		}
 
@@ -1253,6 +1256,12 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	//((*scacchiera[fine.getRiga()][fine.getColonna()]).getSimbolo() != ('r' && 'R'));
 	if (scacchiera[mossa.getCasellaArrivo().getRiga()][mossa.getCasellaArrivo().getColonna()] != nullptr) {
 		if (((*pezFine)).getSimbolo() == ('r' || 'R')) {
+
+			pezInizio = nullptr;
+			delete pezInizio;
+			pezFine = nullptr;
+			delete pezFine;
+
 			return false;
 		}
 	}
@@ -1271,6 +1280,10 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 
 	if (!mossaRegolarePezzo) {
 		//se non è regolare return false
+		pezInizio = nullptr;
+		delete pezInizio;
+		pezFine = nullptr;
+		delete pezFine;
 		return false;
 	}
 
@@ -1290,6 +1303,10 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		//se una casella intermedia è occupata da un pezzo
 		if (scacchiera[temp.getRiga()][temp.getColonna()] != nullptr) {
 			//mossa non valida
+			pezInizio = nullptr;
+			delete pezInizio;
+			pezFine = nullptr;
+			delete pezFine;
 			return false;
 		}
 
@@ -1333,12 +1350,21 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 
 		//ritorna false perchè non si può fare la mossa
 		//(il re sarebbe sotto scacco quindi non è una mossa valida)
+		pezInizio = nullptr;
+		delete pezInizio;
+		pezFine = nullptr;
+		delete pezFine;
 
 		return false;
 
 	}
+	//se sei qui allora la mossa era corretta ed è stata eseguita
 
-	
+	pezInizio = nullptr;
+	delete pezInizio;
+	//non facciamo pezFine = nullptr perchè nel caso non puntasse a nullptr
+	//dealloca l'oggetto Pezzo ormai catturato e non più presente nella scacchiera
+	delete pezFine;
 
 	//se nessun controllo precedente ha dato come risultato return false
 	//la mossa è corretta

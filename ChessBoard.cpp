@@ -1,7 +1,6 @@
 #include "ChessBoard.h"
 
 
-
 //costruttore
 /*
 	*
@@ -58,38 +57,21 @@
 
 */
 ChessBoard::ChessBoard(string arg) {
-
-	
-
-
-
 	//inizializziamo il booleano turno a 1
 	//significa che è il turno del bianco
 	turno = 1;
-
 	statoPartita = Attiva;
 
-
-
-	
 	//per avere i numeri random dopo
 	srand(time(NULL));
 
 	//mappa
 	std::map<string, int> mappa;
 
-
-	
-
-
 	this->resetScacchiera();
-
 
 	//per scegliere il tipo di partita
 	this->sceltaPartita(arg);
-
-
-	srand(time(NULL));
 
 
 	//se è stata scelta la partita giocatore - pc
@@ -100,7 +82,6 @@ ChessBoard::ChessBoard(string arg) {
 		//l'umano avrà il turno del nero
 		//e il pc avrà il turno del bianco
 		if (turnoGiocatoreUmano == 0) {
-
 			//umano nero
 			giocNero =  Player(false, true);
 			//pc bianco
@@ -113,9 +94,7 @@ ChessBoard::ChessBoard(string arg) {
 			//pc nero
 			giocNero = Player(false, false);
 
-
 		}
-
 	}
 	//se invece è stata scelta una partita tra due pc
 	else if (tipoPartita == 1) {
@@ -125,36 +104,26 @@ ChessBoard::ChessBoard(string arg) {
 		//pc nero
 		giocNero = Player(false, false);
 
-
 	}
 
-
-	
 }	//fine  costruttore
-
 
 
 void ChessBoard::stampa() const {
 	//per stampare come vogliono le istruzioni le righe vanno stampate
 	//in ordine decrescente seguendo la numerazione della nostra matrice
-	
 	int riga;
-	int colonna;
-
+	unsigned int colonna;
 	cout << endl << "  ---------------------  " << endl;
-
 
 	//scorrimento di riga
 	for (riga = 7; riga >= 0; riga--) {
 
-
 		//per stampare le righe a fianco della scacchiera
 		std::cout << (riga + 1) << " ";
 
-
 		//scorrimento di colonne, lungo la riga prestabilita
 		for (colonna = 0; colonna < 8; colonna++) {
-
 			//se c'è qualcosa in quella casella
 			if (scacchiera[riga][colonna] != nullptr) {
 				std::cout << (*scacchiera[riga][colonna]).getSimbolo();
@@ -163,10 +132,8 @@ void ChessBoard::stampa() const {
 				std::cout << " ";
 			}
 		}
-
 		//arrivati a fine riga si va a capo
 		std::cout << endl;
-
 
 	}
 	//finito di stampare la scacchiera stampiamo 
@@ -178,12 +145,11 @@ void ChessBoard::stampa() const {
 
 //metodo che traduce la scacchiera in una singola stringa
 string ChessBoard::scacchieraInStringa() const {
-
 	//stringa da ritornare
 	string ret;
 
 	for (int riga = 7; riga >= 0; riga--) {
-		for (int colonna = 0; colonna < 8; colonna++) {
+		for (unsigned int colonna = 0; colonna < 8; colonna++) {
 			//se c'è un pezzo bisogna aggiungere il simbolo
 			if ((scacchiera[riga][colonna]) != nullptr) {
 				ret += (*scacchiera[riga][colonna]).getSimbolo();
@@ -195,8 +161,6 @@ string ChessBoard::scacchieraInStringa() const {
 
 		}
 	}
-
-
 	return ret;
 }
 
@@ -204,18 +168,15 @@ string ChessBoard::scacchieraInStringa() const {
 int ChessBoard::contaPezzi() {
 
 	int numeroPezzi = 0;
-
-	for (int riga = 0; riga < 8; riga++) {
-		for (int colonna = 0; colonna < 8; colonna++) {
+	for (unsigned int riga = 0; riga < 8; riga++) {
+		for (unsigned int colonna = 0; colonna < 8; colonna++) {
 			if (scacchiera[riga][colonna] != nullptr) {
 				numeroPezzi++;
 			}
 		}
-
 	}
 
 	return numeroPezzi;
-
 
 }
 
@@ -223,13 +184,9 @@ int ChessBoard::contaPezzi() {
 //metodo per chiedere e ottenere l'input per la successiva mossa
 //del giocatore umano
 Mossa ChessBoard::input() {
+
 	string in;
-
-
-
 	bool idoneo = false;
-
-
 
 	do {
 		//chiedi input
@@ -242,8 +199,6 @@ Mossa ChessBoard::input() {
 			stampa();
 		}
 
-
-
 		//controlla che la lunghezza sia corretta e che
 		//all'indice 2 ci sia uno spazio
 		if (in.length() == 5 && in[2] == ' ') {
@@ -254,61 +209,35 @@ Mossa ChessBoard::input() {
 			idoneo = false;
 		}
 
-		
-
-
-
-
-
 	} while (!idoneo);
 
 	//a questo punto l'input è corretto
 
-
-//tiene i 4 valori delle coordinate
-
-
+	//tiene i 4 valori delle coordinate
 	int dati[4];
-
 	string input_minuscolo = "";
-
 	char c;
 	int temp;
-
 	char lettera;
-
 
 	for (unsigned int i = 0; i < in.length(); i++) {
 		//leggo un carattere della stringa
 		c = in[i];
-
 		//conversione
 		temp = tolower(c);
-
 		lettera = char(temp);
-
 		//aggiunta alla stringa
 		input_minuscolo += lettera;
 
-
-
 	}
 
-
-
-
-	//std::cout << input_minuscolo << endl;  //funziona
-
 	//mettiamo gli indici ascii delle lettere in dati[4]
-
 
 	//in dati ci sono i valori ascii di lettere e numeri
 	dati[0] = input_minuscolo[0];	//colonna partenza
 	dati[1] = input_minuscolo[1];	//riga partenza
 	dati[2] = input_minuscolo[3];	//colonna arrivo
 	dati[3] = input_minuscolo[4];	//riga arrivo
-
-
 
 	//ora dobbiamo convertirli negli indici che usiamo nella scacchiera quindi
 	//a --> 0 , b --> 1 , ... , h --> 7    per le colonne
@@ -334,8 +263,6 @@ Mossa ChessBoard::input() {
 	//facciamo il return
 
 	return moss;
-
-
 
 }
 
@@ -376,15 +303,10 @@ string ChessBoard::coordinateInTesto(Mossa m) {
 
 	temp = m.getCasellaPartenza().getColonna();	//da 0 a 7
 	
-	
-
 	char carattere = char(temp + 65);
-
 
 	//aggiunta alla stringa della colonna di partenza
 	ret += carattere;
-
-
 	temp = m.getCasellaPartenza().getRiga();	//da 0 a 7
 	
 	//0 deve diventare 1
@@ -400,11 +322,7 @@ string ChessBoard::coordinateInTesto(Mossa m) {
 	carattere = char(temp + 49);
 	ret += carattere;
 
-
 	return ret;
-
-
-
 
 }
 
@@ -422,7 +340,6 @@ Mossa ChessBoard::faiMossa() {
 
 		//se il giocatore è umano
 		if (giocBianco.getUmano()) {
-
 			//input
 			Mossa prossimaMossa = input();
 
@@ -449,14 +366,8 @@ Mossa ChessBoard::faiMossa() {
 
 		//se invece il giocatore non è umano
 		else {
-
-			
-
-			//spara un numero a caso tra 0 e 63
+			//numero a caso tra 0 e 63
 			int casellaIniziale = rand() % 64;
-
-			//conta quante caselle abbiamo guardato sulla scacchiera
-			caselleAnalizzate = 0;
 
 			//intero che dice se la casellaIniziale aumenterà
 			//o diminuirà ogni iterazione
@@ -466,10 +377,6 @@ Mossa ChessBoard::faiMossa() {
 			if (aumentoCasella == 0) {
 				aumentoCasella = -1;
 			}
-
-
-			//riga    = casellaIniziale / 8
-			//colonna = casellaIniziale % 8
 
 			bool mossaFatta = false;
 
@@ -482,7 +389,6 @@ Mossa ChessBoard::faiMossa() {
 				riga = casellaIniziale / 8;
 				colonna = casellaIniziale % 8;
 
-
 				//controlliamo che in questa casella ci sia un pezzo
 				if (scacchiera[riga][colonna] != nullptr) {
 					//controlliamo che il pezzo sia bianco
@@ -494,16 +400,9 @@ Mossa ChessBoard::faiMossa() {
 						//creiamo casella con la posizione di partenza
 						Casella partenza(riga, colonna);
 
-
-						// DA TOGLIERE IL PIU' PRESTO POSSIBILE
 						std::vector<Casella> mosse = (*scacchiera[riga][colonna]).mossePezzo(partenza);
-						if (caselleAnalizzate == 66) {
-							stampa();
-						}
-
 						
-
-						
+	
 						//se è pedone
 						if ((*scacchiera[riga][colonna]).getSimbolo() == 'p') {
 							//controlliamo e nel caso togliamo le caselle di spostamento
@@ -551,8 +450,6 @@ Mossa ChessBoard::faiMossa() {
 
 						//proviamo una ad una le varie mosse 
 						//e vediamo se sono regolari
-
-
 						for (unsigned int i = 0; i < mosse.size(); i++) {
 
 							//se non è stata ancora fatta una mossa regolare
@@ -578,23 +475,8 @@ Mossa ChessBoard::faiMossa() {
 									return   mossaDaProvare;
 
 								}
-
-
-
 							}
-
-							
-
-
-
 						}
-
-
-
-
-
-
-
 					}
 				}
 				//fuori dall'if che controlla se in quella casella c'è un pezzo
@@ -603,7 +485,6 @@ Mossa ChessBoard::faiMossa() {
 
 				//incrementiamo il numero per la casella
 				casellaIniziale = casellaIniziale + aumentoCasella;
-				caselleAnalizzate++;
 
 				//se però il valore è sopra il 63 
 				//bisogna reimpostarlo a 0
@@ -616,19 +497,10 @@ Mossa ChessBoard::faiMossa() {
 				if (casellaIniziale < 0) {
 					casellaIniziale = 63;
 				}
-
-				
-
-
-
-
-
 			}
 			//fuori dal while (!mossaFatta)
-
 		}
 		//fuori dall'else (giocatore bianco non umano)
-
 	}
 	//se invece è turno del nero
 	else {
@@ -663,15 +535,8 @@ Mossa ChessBoard::faiMossa() {
 		//se invece il giocatore nero è pc
 		else {
 
-
-
-			
-
-			//spara un numero a caso tra 0 e 63
+			//numero a caso tra 0 e 63
 			int casellaIniziale = rand() % 64;
-
-			//conta quante caselle abbiamo analizzato
-			caselleAnalizzate = 0;
 
 			//intero che dice se la casellaIniziale aumenterà
 			//o diminuirà ogni iterazione
@@ -681,10 +546,6 @@ Mossa ChessBoard::faiMossa() {
 			if (aumentoCasella == 0) {
 				aumentoCasella = -1;
 			}
-
-
-			//riga    = casellaIniziale / 8
-			//colonna = casellaIniziale % 8
 
 			bool mossaFatta = false;
 
@@ -710,21 +571,10 @@ Mossa ChessBoard::faiMossa() {
 
 						std::vector<Casella> mosse = (*scacchiera[riga][colonna]).mossePezzo(partenza);
 
-						if (caselleAnalizzate >= 69) {
-							stampa();
-						}
-
-
-
-
-
-
-
 						//se è pedone
 						if ((*scacchiera[riga][colonna]).getSimbolo() == 'P') {
 							//controlliamo e nel caso togliamo le caselle di spostamento
 							//diagonale se nella casella d'arrivo non c'è un pezzo avversario (non re bianco)
-
 
 							//scorriamo il vector, se ha almeno un elemento
 							//ed eliminiamo le caselle scorrette
@@ -749,8 +599,6 @@ Mossa ChessBoard::faiMossa() {
 											mosse.erase(mosse.begin() + j);
 										}
 
-
-
 									}
 									//se il movimento è in alto/basso
 									else if (mosse[j].getColonna() == colonna) {
@@ -766,8 +614,6 @@ Mossa ChessBoard::faiMossa() {
 
 								//fine correzione mosse per pedone
 							}
-
-
 
 							//fine if sul pedone
 						}
@@ -802,19 +648,9 @@ Mossa ChessBoard::faiMossa() {
 									return   mossaDaProvare;
 								}
 
-
-
 							}
 
-
-
 						}
-
-
-
-
-
-
 
 					}
 				}
@@ -824,7 +660,6 @@ Mossa ChessBoard::faiMossa() {
 
 				//incrementiamo il numero per la casella
 				casellaIniziale = casellaIniziale + aumentoCasella;
-				caselleAnalizzate++;
 
 				//se però il valore è sopra il 63 
 				//bisogna reimpostarlo a 0
@@ -838,31 +673,12 @@ Mossa ChessBoard::faiMossa() {
 					casellaIniziale = 63;
 				}
 
-
-
-
-
 			}
 			//fuori dal while (!mossaFatta)
-
-			
-
-			
-
-
 		}
 		//fuori dall'else (giocatore nero non umano)
-
-
-
 	}
 	//fuori dall'else (turno del nero)
-
-
-
-
-
-
 }	//fine metodo faiMossa
 
 
@@ -887,8 +703,6 @@ void ChessBoard::partita() {
 	out.open("Partita.txt");
 
 
-	
-	
 	//finchè la partita non è terminata
 	while (statoPartita == Attiva) {
 
@@ -896,13 +710,6 @@ void ChessBoard::partita() {
 		//prima e dopo la mossa
 		int pezziPrima = contaPezzi();
 		int pezziDopo = 0;
-
-		
-
-
-
-
-
 
 		//se è turno del bianco mettiamo una riga divisoria
 		if (turno) {
@@ -939,9 +746,6 @@ void ChessBoard::partita() {
 			}
 		}
 
-		
-
-
 		bool pedoneMosso = false;
 		
 		Mossa mossaFatta;
@@ -949,12 +753,8 @@ void ChessBoard::partita() {
 		//se sei qui il giocatore di questo turno può fare mosse
 		if (statoPartita == Attiva) {
 
-
 			//fai fare la mossa al giocatore
 			mossaFatta = faiMossa();
-
-			//mossaFatta.setCasellaPartenza(mossa.getCasellaPartenza());
-			//mossaFatta.setCasellaArrivo(mossa.getCasellaArrivo());
 
 			//controlliamo se è stato mosso un pedone
 			char c = (*scacchiera[mossaFatta.getCasellaArrivo().getRiga()][mossaFatta.getCasellaArrivo().getColonna()]).getSimbolo();
@@ -966,10 +766,8 @@ void ChessBoard::partita() {
 			string m = coordinateInTesto(mossaFatta);
 			out << m[0] << m[1] << " " << m[2] << m[3] << endl;
 
-
 			//incremento mosse
 			mossePartita++;
-
 
 			//stampa();
 			cambiaTurno();
@@ -998,9 +796,6 @@ void ChessBoard::partita() {
 			cout << "Partita conclusa con una patta perche' : " << endl
 			     << "le ultime 50 mosse consecutive sono state fatte da ciascun giocatore senza il movimento di alcun pedone e senza alcuna cattura" << endl;
 		}
-
-
-		// ------------------------------------------------------------
 
 		//mappa per fare patta se una certa posizione dei pezzi
 		//nella scacchiera si ripresenta per la terza volta
@@ -1042,18 +837,12 @@ void ChessBoard::partita() {
 			std::cout << "Partita annullata per superamento delle mosse massime" << endl;
 
 		}
-
-
-
-	
 	}
 	//fuori while (statoPartita == Attiva)	
-
+	//liberaScacchiera();
 
 	out.close();
 
-
-		
 }	//fine del movimento di un singolo pezzo
 	
 	//fine metodo partita
@@ -1062,18 +851,14 @@ void ChessBoard::partita() {
 
 //metodo resetScacchiera
 void ChessBoard::resetScacchiera() {
-
-	//scacchiera[riga][colonna]
-
 	//inizializza tutta la scacchiera a nullptr
-	for (int riga = 0; riga < 8; riga++) {
-		for (int colonna = 0; colonna < 8; colonna++) {
+	for (unsigned int riga = 0; riga < 8; riga++) {
+		for (unsigned int colonna = 0; colonna < 8; colonna++) {
 			scacchiera[riga][colonna] = nullptr;
 		}
 	}
 
 	//inizializziamo i pedoni bianchi
-
 	scacchiera[1][0] = new Pedone(true);
 	scacchiera[1][1] = new Pedone(true);
 	scacchiera[1][2] = new Pedone(true);
@@ -1084,7 +869,6 @@ void ChessBoard::resetScacchiera() {
 	scacchiera[1][7] = new Pedone(true);
 	
 	//inizializziamo i pedoni neri
-
 	scacchiera[6][0] = new Pedone(false);
 	scacchiera[6][1] = new Pedone(false);
 	scacchiera[6][2] = new Pedone(false);
@@ -1093,26 +877,20 @@ void ChessBoard::resetScacchiera() {
 	scacchiera[6][5] = new Pedone(false);
 	scacchiera[6][6] = new Pedone(false);
 	scacchiera[6][7] = new Pedone(false);
-	
-	//ci rimane da inizializzare il resto della scacchiera
 
 	//due re (nero e bianco)
 	scacchiera[0][4] = new Re(true);
 	scacchiera[7][4] = new Re(false);
 
-
 	//due regine
 	scacchiera[0][3] = new Regina(true);
 	scacchiera[7][3] = new Regina(false);
-
-
 
 	//i 4 cavalli
 	scacchiera[0][1] = new Cavallo(true);
 	scacchiera[0][6] = new Cavallo(true);
 	scacchiera[7][1] = new Cavallo(false);
 	scacchiera[7][6] = new Cavallo(false);
-
 
 	//4 alfieri
 	scacchiera[0][2] = new Alfiere(true);
@@ -1121,12 +899,25 @@ void ChessBoard::resetScacchiera() {
 	scacchiera[7][5] = new Alfiere(false);
 
 	//4 torri
-
 	scacchiera[0][0] = new Torre(true);
 	scacchiera[0][7] = new Torre(true);
 	scacchiera[7][0] = new Torre(false);
 	scacchiera[7][7] = new Torre(false);
+}
 
+//distruttore
+ChessBoard::~ChessBoard() {
+	for (unsigned int riga = 0; riga < 8; riga++) {
+		for (unsigned int colonna = 0; colonna < 8; colonna++) {
+			//se c'è un pezzo nella scacchiera
+			if (scacchiera[riga][colonna] != nullptr) {
+				Pezzo* pez = scacchiera[riga][colonna];
+				scacchiera[riga][colonna] = nullptr;
+				delete pez;
+			}
+
+		}
+	}
 }
 
 /*
@@ -1154,11 +945,8 @@ bool ChessBoard::inputCorretto(const  Mossa &prossimaMossa) {
 		return false;
 	}
 
-
 	//se sei qui allora l'input è corretto
 	return true;
-
-
 }
 
 //metodo che controlla tutto quello che c'è da controllare in una mossa
@@ -1177,13 +965,11 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		(mossa.getCasellaPartenza().getRiga()    == mossa.getCasellaArrivo().getRiga())) {
 
 		return false;
-
 	}
 	
 	//il pezzo che si sta muovendo deve avere lo stesso colore del giocatore di quel turno
 	//(un giocatore bianco non può muovere un pezzo nero)
 
-	
 	Pezzo* pezInizio;
 	pezInizio = scacchiera[mossa.getCasellaPartenza().getRiga()][mossa.getCasellaPartenza().getColonna()];
 	//1 per i bianchi, 0 per i neri
@@ -1195,8 +981,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		delete pezInizio;
 		return false;
 	}
-
-
 
 	//se c'è un pezzo da catturare nella casella di fine 
 	//deve avere un colore opposto rispetto a quello di chi sta facendo la mossa
@@ -1234,13 +1018,9 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		}
 	}
 
-
-	// ----
-
 	//lo spostamento di quel pezzo deve avvenire secondo le regole di quel pezzo
 	//immaginandolo in una scacchiera vuota
 	
-
 	bool pezzoDaCatturare = (scacchiera[mossa.getCasellaArrivo().getRiga()][mossa.getCasellaArrivo().getColonna()] != nullptr);
 
 	//la mossa è regolare per quel pezzo? (immaginando una scacchiera vuota)
@@ -1267,7 +1047,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	for (unsigned int i = 0; i < cas.size(); i++) {
 
 		Casella temp = cas[i];
-
 		//se una casella intermedia è occupata da un pezzo
 		if (scacchiera[temp.getRiga()][temp.getColonna()] != nullptr) {
 			//mossa non valida
@@ -1280,11 +1059,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 
 	}
 
-
-
-
-
-	// ----------------------------------------------------------------------------
 	//controlla che facendo questa mossa il re del giocatore che ha il turno
 	//non sia sotto scacco
 
@@ -1300,8 +1074,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	//pezFine punta al pezzo che ne stava nella casella finale (se c'era)
 	scacchiera[in.getRiga()][in.getColonna()] = nullptr;
 
-	// ----
-
 	//ora che abbiamo eseguito la mossa dobbiamo controllare se il nostro re è sotto scacco
 	//il metodo tiene conto di qual è il turno attuale
 
@@ -1314,7 +1086,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 
 		//pezFine può essere nullptr o un puntatore ad un Pezzo
 		scacchiera[ar.getRiga()][ar.getColonna()] = pezFine;
-
 
 		//ritorna false perchè non si può fare la mossa
 		//(il re sarebbe sotto scacco quindi non è una mossa valida)
@@ -1338,9 +1109,7 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	//la mossa è corretta
 	//ricorda che abbiamo anche eseguito tale mossa
 	return true;
-
 }
-
 
 /*
 	metodo che controlla se i pezzi avversari (rispetto a chi gioca quel turno)
@@ -1350,10 +1119,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 
 */
 bool ChessBoard::reSottoScacco() {
-
-	//bisogna dividere il codice in due parti
-	//a seconda di chi sta giocando questo turno
-
 	//se è il turno del bianco
 	if (turno) {
 		//dobbiamo controllare se almeno uno dei pezzi neri ha la possibilità di spostarsi 
@@ -1361,14 +1126,13 @@ bool ChessBoard::reSottoScacco() {
 
 		//scorriamo la scacchiera per guardare dove si trovano i pezzi neri 
 
-
 		//cerchiamo il re bianco per trovare le sue coordinate
 		int rigaReBianco = -1;
 		int colonnaReBianco = -1;
 		//righe
 		for (int riga = 7; riga >= 0; riga--) {
 			//colonne
-			for (int colonna = 0; colonna < 8; colonna++) {
+			for (unsigned int colonna = 0; colonna < 8; colonna++) {
 				//c'è qualcosa nella casella?
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//è il re bianco?
@@ -1379,19 +1143,16 @@ bool ChessBoard::reSottoScacco() {
 				}
 			}
 		}
-
 		//abbiamo le coordinate del re bianco
 
 		for (int riga = 7; riga >= 0; riga--) {
-			for (int colonna = 0; colonna < 8; colonna++) {
-
+			for (unsigned int colonna = 0; colonna < 8; colonna++) {
 				//se quella casella non è vuota
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//se quel pezzo è nero (avversario)
 					if ((*scacchiera[riga][colonna]).getColore() == false) {
 
 						Casella temp(riga, colonna);
-
 						//vettore con tutte le mosse che può fare
 						std::vector<Casella> cas = (*scacchiera[riga][colonna]).mossePezzo(temp);
 
@@ -1418,7 +1179,6 @@ bool ChessBoard::reSottoScacco() {
 						}
 						//fuori dall'if sul pedone
 
-
 						//devo controllare che in nessuno di questi posti ci sia il re bianco
 						for (unsigned int i = 0; i < cas.size(); i++) {
 							//se una di queste posizioni è uguale a quella del re bianco
@@ -1444,32 +1204,26 @@ bool ChessBoard::reSottoScacco() {
 								if (tutteCaselleVuote) {
 									return true;
 								}
-
 							}
 						}
 					}
 				}
 			}
 		}
-
-
-
 		//se sei qui il re bianco non è sotto scacco
 		return false;
-
 		//fine parte dedicata al turno del bianco
 	}
 	//se è il turno del nero
 	//bisogna controllare se il re nero è sotto scacco
 	else {
-
 		//cerchiamo il re nero per trovare le sue coordinate
 		int rigaReNero = -1;
 		int colonnaReNero = -1;
 		//righe
 		for (int riga = 7; riga >= 0; riga--) {
 			//colonne
-			for (int colonna = 0; colonna < 8; colonna++) {
+			for (unsigned int colonna = 0; colonna < 8; colonna++) {
 				//c'è qualcosa nella casella?
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//è il re bianco?
@@ -1480,19 +1234,16 @@ bool ChessBoard::reSottoScacco() {
 				}
 			}
 		}
-
 		//abbiamo le coordinate del re nero
 
 		for (int riga = 7; riga >= 0; riga--) {
-			for (int colonna = 0; colonna < 8; colonna++) {
-
+			for (unsigned int colonna = 0; colonna < 8; colonna++) {
 				//se quella casella non è vuota
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//se quel pezzo è bianco (avversario)
 					if ((*scacchiera[riga][colonna]).getColore() == true) {
 
 						Casella temp(riga, colonna);
-
 						//vettore con tutte le mosse che può fare
 						std::vector<Casella> cas = (*scacchiera[riga][colonna]).mossePezzo(temp);
 
@@ -1545,35 +1296,22 @@ bool ChessBoard::reSottoScacco() {
 								if (tutteCaselleVuote) {
 									return true;
 								}
-
 							}
 						}
 					}
 				}
 			}
 		}
-
 		//se sei qui signfica che il re nero non è sotto scacco
 		return false;
 		//fine parte per il turno del nero
-
 	}
-
-
-
 }
-
 
 void ChessBoard::cambiaTurno() {
-
-	
 	bool prossimoTurno = !turno;
-
 	turno = prossimoTurno;
-
-
 }
-
 
 
 /*
@@ -1583,8 +1321,6 @@ void ChessBoard::cambiaTurno() {
 		false altrimenti
 
 	*/
-
-
 bool ChessBoard::possoFareMosse() {
 
 	//se è turno del bianco
@@ -1593,22 +1329,19 @@ bool ChessBoard::possoFareMosse() {
 		//scorrimento righe
 		for (int riga = 7; riga >= 0; riga--) {
 			//scorrimento colonne
-			for (int colonna = 0; colonna < 8; colonna++) {
+			for (unsigned int colonna = 0; colonna < 8; colonna++) {
 				//se c'è un pezzo in questa casella
 				if (scacchiera[riga][colonna] != nullptr) {
 					//se quel pezzo è bianco
 					if ((*scacchiera[riga][colonna]).getColore()) {
 
 						Casella in(riga, colonna);
-
 						std::vector<Casella> mosse = (*scacchiera[riga][colonna]).mossePezzo(in);
-
-						
+		
 						//se è pedone
 						if ((*scacchiera[riga][colonna]).getSimbolo() == 'p') {
 							//controlliamo e nel caso togliamo le caselle di spostamento
 							//diagonale se nella casella d'arrivo non c'è un pezzo avversario (non re nero)
-
 
 							//scorriamo il vector, se ha almeno un elemento
 							//ed eliminiamo le caselle scorrette
@@ -1640,15 +1373,10 @@ bool ChessBoard::possoFareMosse() {
 											//eliminazione
 											mosse.erase(mosse.begin() + j);
 										}
-
 									}
-
 								}
-
 								//fine correzione mosse per pedone
 							}
-
-
 
 							//fine if sul pedone
 						}
@@ -1656,7 +1384,6 @@ bool ChessBoard::possoFareMosse() {
 						
 						//cerchiamo di capire se c'è almeno una mossa sul vector corretta
 						//nel caso facciamo return true
-
 
 						//scorriamo il vector e guardiamo ogni mossa
 						for (unsigned int i = 0; i < mosse.size(); i++) {
@@ -1674,12 +1401,10 @@ bool ChessBoard::possoFareMosse() {
 
 							//se tutte le caselle erano vuote
 							if (tutteCaselleVuote) {
-
 								//controlliamo che la casella di arrivo non abbia un pezzo del colore bianco
 								//ammesso che ci sia un pezzo nella casella di fine
 								//se la casella di fine non ha pezzi, o ne ha uno nero
 								if (((scacchiera[mosse[i].getRiga()][mosse[i].getColonna()]) == nullptr) || (!((*scacchiera[mosse[i].getRiga()][mosse[i].getColonna()]).getColore()))) {
-
 
 									//la casella di arrivo non può avere il re avversario
 									//ammesso che ci sia un pezzo
@@ -1698,7 +1423,6 @@ bool ChessBoard::possoFareMosse() {
 											scacchiera[in.getRiga()][in.getColonna()] = nullptr;
 
 											//ora che ho fatto la mossa, vediamo se il mio re è sottoscacco
-
 											bool reScacco = reSottoScacco();
 
 											//se non lo dovesse essere, cioè se reScacco == false
@@ -1710,11 +1434,8 @@ bool ChessBoard::possoFareMosse() {
 											scacchiera[mosse[i].getRiga()][mosse[i].getColonna()] = pezFine;
 
 											//e cancelliamo i puntatori
-											
-
 											pezInizio = nullptr;
 											pezFine = nullptr;
-
 
 											delete pezInizio;
 											delete pezFine;
@@ -1723,21 +1444,10 @@ bool ChessBoard::possoFareMosse() {
 											if (!reScacco) {
 												return true;
 											}
-
-
-
-
-
-
-
-
-
 										}
-
 									}
 									//se la casella di arrivo non ha pezzi
 									else {
-
 										//controlliamo che facendo quella mossa il mio re non sia sotto scacco
 										Pezzo* pezInizio = scacchiera[riga][colonna];
 										Pezzo* pezFine = scacchiera[mosse[i].getRiga()][mosse[i].getColonna()];
@@ -1759,8 +1469,6 @@ bool ChessBoard::possoFareMosse() {
 										scacchiera[in.getRiga()][in.getColonna()] = pezInizio;
 										scacchiera[mosse[i].getRiga()][mosse[i].getColonna()] = nullptr;
 
-
-
 										pezInizio = nullptr;
 										pezFine = nullptr;
 
@@ -1770,11 +1478,7 @@ bool ChessBoard::possoFareMosse() {
 										if (!reScacco) {
 											return true;
 										}
-
-
-
 									}
-
 								}
 							}
 						}
@@ -1783,9 +1487,7 @@ bool ChessBoard::possoFareMosse() {
 			}
 		}
 		//fine parte dedicata al turno del bianco
-
 		//se il bianco è arrivato qui nessuna mossa è fattibile da un suo pezzo
-
 		return false;
 	}
 	//inizio parte dedicata al turno del nero
@@ -1794,22 +1496,19 @@ bool ChessBoard::possoFareMosse() {
 	//scorrimento righe
 	for (int riga = 7; riga >= 0; riga--) {
 		//scorrimento colonne
-		for (int colonna = 0; colonna < 8; colonna++) {
+		for (unsigned int colonna = 0; colonna < 8; colonna++) {
 			//se c'è un pezzo in questa casella
 			if (scacchiera[riga][colonna] != nullptr) {
 				//se quel pezzo è nero
 				if ( (!((*scacchiera[riga][colonna]).getColore()))) {
 
 					Casella in(riga, colonna);
-
 					std::vector<Casella> mosse = (*scacchiera[riga][colonna]).mossePezzo(in);
-
-					
+	
 					//se è pedone
 					if ((*scacchiera[riga][colonna]).getSimbolo() == 'P') {
 						//controlliamo e nel caso togliamo le caselle di spostamento
 						//diagonale se nella casella d'arrivo non c'è un pezzo avversario (non re bianco)
-
 
 						//scorriamo il vector, se ha almeno un elemento
 						//ed eliminiamo le caselle scorrette
@@ -1834,8 +1533,6 @@ bool ChessBoard::possoFareMosse() {
 										mosse.erase(mosse.begin() + j);
 									}
 
-
-
 								}
 								//se il movimento è in alto/basso
 								else if (mosse[j].getColonna() == colonna) {
@@ -1844,23 +1541,16 @@ bool ChessBoard::possoFareMosse() {
 										//eliminazione
 										mosse.erase(mosse.begin() + j);
 									}
-
 								}
-
 							}
-
 							//fine correzione mosse per pedone
 						}
-
-
-
 						//fine if sul pedone
 					}
 					//fuori dall'if sul pedone
 					
 					//cerchiamo di capire se c'è almeno una mossa sul vector corretta
 					//nel caso facciamo return true
-
 
 					//scorriamo il vector e guardiamo ogni mossa
 					for (unsigned int i = 0; i < mosse.size(); i++) {
@@ -1878,12 +1568,10 @@ bool ChessBoard::possoFareMosse() {
 
 						//se tutte le caselle erano vuote
 						if (tutteCaselleVuote) {
-
 							//controlliamo che la casella di arrivo non abbia un pezzo del colore nero
 							//ammesso che ci sia un pezzo nella casella di fine
 							//se la casella di fine non ha pezzi, o ne ha uno bianco
 							if (((scacchiera[mosse[i].getRiga()][mosse[i].getColonna()]) == nullptr) || ((*scacchiera[mosse[i].getRiga()][mosse[i].getColonna()]).getColore())) {
-
 
 								//la casella di arrivo non può avere il re avversario
 								//ammesso che ci sia un pezzo
@@ -1902,9 +1590,7 @@ bool ChessBoard::possoFareMosse() {
 										scacchiera[in.getRiga()][in.getColonna()] = nullptr;
 
 										//ora che ho fatto la mossa, vediamo se il mio re è sottoscacco
-
 										bool reScacco = reSottoScacco();
-
 										//se non lo dovesse essere, cioè se reScacco == false
 										//abbiamo trovato almeno una mossa fattibile 
 										//quindi facciamo return true
@@ -1919,22 +1605,11 @@ bool ChessBoard::possoFareMosse() {
 										delete pezInizio;
 										delete pezFine;
 										
-
 										//ritorno
 										if (!reScacco) {
 											return true;
 										}
-
-
-
-
-
-
-
-
-
 									}
-
 								}
 								//se la casella di arrivo non ha pezzi
 								else {
@@ -1982,14 +1657,8 @@ bool ChessBoard::possoFareMosse() {
 			}
 		}
 	}
-
-
-
 	//se il nero è arrivato qui non può fare nessuna mossa legale
-
 	return false;
 
 	}
-
-
 }

@@ -223,12 +223,13 @@ public:
 	int contaPezzi();
 
 
+	//distruttore
+	//dealloca tutti i Pezzi
+	//rimanenti nella scacchiera
+	~ChessBoard();
 
 
 
-
-	
-	
 	
 };
 

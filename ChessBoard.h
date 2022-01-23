@@ -123,8 +123,7 @@ private:
 
 
 
-public:
-	ChessBoard(string arg);	//costruttore
+//---------------------------------------------------------------------------------
 
 
 	//inizializza la scacchiera
@@ -135,16 +134,6 @@ public:
 	//metodo per scegliere la partita se non specificato da riga di comando
 	void sceltaPartita(string arg);
 
-
-	/*
-		metodo principale che gestisce la partita
-	
-	*/
-	void partita(); 
-
-
-	//metodo stampa
-	void stampa() const;
 
 	//metodo per tradurre la scacchiera in una stringa
 	string scacchieraInStringa() const;
@@ -223,13 +212,27 @@ public:
 	int contaPezzi();
 
 
+
+public:
+
+	//costruttore
+	ChessBoard(string arg);
+
+	/*
+		metodo principale che gestisce la partita
+
+	*/
+	void partita();
+
+
+	//metodo stampa
+	void stampa() const;
+
+
 	//distruttore
 	//dealloca tutti i Pezzi
 	//rimanenti nella scacchiera
 	~ChessBoard();
-
-
-
 	
 };
 

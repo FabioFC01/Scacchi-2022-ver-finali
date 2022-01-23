@@ -60,7 +60,7 @@ ChessBoard::ChessBoard(string arg) {
 	//inizializziamo il booleano turno a 1
 	//significa che è il turno del bianco
 	turno = 1;
-	statoPartita = Attiva;
+	statoPartita = stato::Attiva;
 
 	//per avere i numeri random dopo
 	srand(time(NULL));
@@ -704,7 +704,7 @@ void ChessBoard::partita() {
 
 
 	//finchè la partita non è terminata
-	while (statoPartita == Attiva) {
+	while (statoPartita == stato::Attiva) {
 
 		//interi per contare il numero dei pezzi nella scacchiera
 		//prima e dopo la mossa
@@ -721,7 +721,7 @@ void ChessBoard::partita() {
 
 			if (reSottoScacco()) {
 				//questa è la condizione di scacco matto
-				statoPartita = ScaccoMatto;
+				statoPartita = stato::ScaccoMatto;
 
 				if (turno) {
 					std::cout << "SCACCO MATTO !!! " << endl;
@@ -734,7 +734,7 @@ void ChessBoard::partita() {
 
 			}
 			else {
-				statoPartita = Stallo;
+				statoPartita = stato::Stallo;
 				if (turno) {
 					std::cout << "STALLO !!! " << endl;
 					std::cout << "Il nero vince" << endl;
@@ -751,7 +751,7 @@ void ChessBoard::partita() {
 		Mossa mossaFatta;
 
 		//se sei qui il giocatore di questo turno può fare mosse
-		if (statoPartita == Attiva) {
+		if (statoPartita == stato::Attiva) {
 
 			//fai fare la mossa al giocatore
 			mossaFatta = faiMossa();
@@ -792,7 +792,7 @@ void ChessBoard::partita() {
 		//se uno dei due contatori appena visti eguaglia o supera
 		//i 50 la partita si conclude con una patta
 		if (mosseSenzaCattura >= 100  && mossePedNonSpostati >= 100) {
-			statoPartita = Patta;
+			statoPartita = stato::Patta;
 			cout << "Partita conclusa con una patta perche' : " << endl
 			     << "le ultime 50 mosse consecutive sono state fatte da ciascun giocatore senza il movimento di alcun pedone e senza alcuna cattura" << endl;
 		}
@@ -813,7 +813,7 @@ void ChessBoard::partita() {
 			//altre due volte in passato (e quindi questa è la terza)
 			//la partita termina con una patta
 			if (it->second >= 2) {
-				statoPartita = Patta;
+				statoPartita = stato::Patta;
 				cout << "Partita conclusa perche' si è verificata la stessa configurazione della scacchiera per tre volte" << endl;
 			}
 			else {
@@ -833,7 +833,7 @@ void ChessBoard::partita() {
 			//è stato superato il limite di mosse
 		if ((tipoPartita == 1) && (mossePartita >= maxMossePc)) {
 
-			statoPartita = Patta;
+			statoPartita = stato::Patta;
 			std::cout << "Partita annullata per superamento delle mosse massime" << endl;
 
 		}
@@ -918,6 +918,7 @@ ChessBoard::~ChessBoard() {
 
 		}
 	}
+
 }
 
 /*

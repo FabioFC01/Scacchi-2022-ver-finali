@@ -1,7 +1,6 @@
+// COCIANCICH FABIO - 2016268
+
 #include "Pezzo.h"
-
-//implementiamo i vari metodi della classe Pezzo
-
 
 //1 per i bianchi, 0 per i neri
 void Pezzo::setColore(const bool b) {

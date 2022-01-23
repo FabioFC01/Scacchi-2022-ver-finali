@@ -1,61 +1,7 @@
+// COCIANCICH FABIO - 2016268
 #include "ChessBoard.h"
 
-
 //costruttore
-/*
-	*
-	* Configurazione iniziale scacchiera
-
-	8 TCADRACT
-	7 PPPPPPPP
-	6
-	5
-	4
-	3
-	2 pppppppp
-	1 tcadract
-	  ABCDEFGH
-
-
-	  dove
-	  P pedone
-	  T torre
-	  C cavallo
-	  A alfiere
-	  D regina
-	  R re
-	  ---
-	  MAIUSCOLE --- PEZZI NERI
-	  minuscole --- pezzi bianchi
-
-	  inizia il bianco
-	*/
-
-/*
-* 
-* indici per la nostra matrice
-* 
-*	bianchi minuscoli
-* 
-*   0 tcadract
-	1 pppppppp
-	2
-	3
-	4
-	5
-	6 PPPPPPPP
-	7 TCADRACT
-	  01234567
-	  ABCDEFGH
-
-	  neri
-
-
-	quindi è come se la scacchiera fosse vista dall'altra parte
-	con i numeri delle righe diminuiti di 1
-
-
-*/
 ChessBoard::ChessBoard(string arg) {
 	//inizializziamo il booleano turno a 1
 	//significa che è il turno del bianco
@@ -117,13 +63,13 @@ void ChessBoard::stampa() const {
 	cout << endl << "  ---------------------  " << endl;
 
 	//scorrimento di riga
-	for (riga = 7; riga >= 0; riga--) {
+	for (riga = (grandezza-1); riga >= 0; riga--) {
 
 		//per stampare le righe a fianco della scacchiera
 		std::cout << (riga + 1) << " ";
 
 		//scorrimento di colonne, lungo la riga prestabilita
-		for (colonna = 0; colonna < 8; colonna++) {
+		for (colonna = 0; colonna < grandezza; colonna++) {
 			//se c'è qualcosa in quella casella
 			if (scacchiera[riga][colonna] != nullptr) {
 				std::cout << (*scacchiera[riga][colonna]).getSimbolo();
@@ -148,8 +94,8 @@ string ChessBoard::scacchieraInStringa() const {
 	//stringa da ritornare
 	string ret;
 
-	for (int riga = 7; riga >= 0; riga--) {
-		for (unsigned int colonna = 0; colonna < 8; colonna++) {
+	for (int riga = (grandezza-1); riga >= 0; riga--) {
+		for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 			//se c'è un pezzo bisogna aggiungere il simbolo
 			if ((scacchiera[riga][colonna]) != nullptr) {
 				ret += (*scacchiera[riga][colonna]).getSimbolo();
@@ -168,8 +114,8 @@ string ChessBoard::scacchieraInStringa() const {
 int ChessBoard::contaPezzi() {
 
 	int numeroPezzi = 0;
-	for (unsigned int riga = 0; riga < 8; riga++) {
-		for (unsigned int colonna = 0; colonna < 8; colonna++) {
+	for (unsigned int riga = 0; riga < grandezza; riga++) {
+		for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 			if (scacchiera[riga][colonna] != nullptr) {
 				numeroPezzi++;
 			}
@@ -380,14 +326,14 @@ Mossa ChessBoard::faiMossa() {
 
 			bool mossaFatta = false;
 
-			int riga = casellaIniziale / 8;
-			int colonna = casellaIniziale % 8;
+			int riga = casellaIniziale / grandezza;
+			int colonna = casellaIniziale % grandezza;
 
 			while ((!mossaFatta)) {
 
 				//calcoliamo in quale riga e colonna ci troviamo
-				riga = casellaIniziale / 8;
-				colonna = casellaIniziale % 8;
+				riga = casellaIniziale / grandezza;
+				colonna = casellaIniziale % grandezza;
 
 				//controlliamo che in questa casella ci sia un pezzo
 				if (scacchiera[riga][colonna] != nullptr) {
@@ -549,14 +495,14 @@ Mossa ChessBoard::faiMossa() {
 
 			bool mossaFatta = false;
 
-			int riga = casellaIniziale / 8;
-			int colonna = casellaIniziale % 8;
+			int riga = casellaIniziale / grandezza;
+			int colonna = casellaIniziale % grandezza;
 
 			while ((!mossaFatta)) {
 
 				//calcoliamo in quale riga e colonna ci troviamo
-				riga = casellaIniziale / 8;
-				colonna = casellaIniziale % 8;
+				riga = casellaIniziale / grandezza;
+				colonna = casellaIniziale % grandezza;
 
 				//controlliamo che in questa casella ci sia un pezzo
 				if (scacchiera[riga][colonna] != nullptr) {
@@ -791,7 +737,7 @@ void ChessBoard::partita() {
 
 		//se uno dei due contatori appena visti eguaglia o supera
 		//i 50 la partita si conclude con una patta
-		if (mosseSenzaCattura >= 100  && mossePedNonSpostati >= 100) {
+		if (mosseSenzaCattura >= maxMosse && mossePedNonSpostati >= maxMosse) {
 			statoPartita = stato::Patta;
 			cout << "Partita conclusa con una patta perche' : " << endl
 			     << "le ultime 50 mosse consecutive sono state fatte da ciascun giocatore senza il movimento di alcun pedone e senza alcuna cattura" << endl;
@@ -843,17 +789,14 @@ void ChessBoard::partita() {
 
 	out.close();
 
-}	//fine del movimento di un singolo pezzo
-	
-	//fine metodo partita
-
-
+}	//fine del movimento di un singolo pezzo	
+//fine metodo partita
 
 //metodo resetScacchiera
 void ChessBoard::resetScacchiera() {
 	//inizializza tutta la scacchiera a nullptr
-	for (unsigned int riga = 0; riga < 8; riga++) {
-		for (unsigned int colonna = 0; colonna < 8; colonna++) {
+	for (unsigned int riga = 0; riga < grandezza; riga++) {
+		for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 			scacchiera[riga][colonna] = nullptr;
 		}
 	}
@@ -907,13 +850,14 @@ void ChessBoard::resetScacchiera() {
 
 //distruttore
 ChessBoard::~ChessBoard() {
-	for (unsigned int riga = 0; riga < 8; riga++) {
-		for (unsigned int colonna = 0; colonna < 8; colonna++) {
+	for (unsigned int riga = 0; riga < grandezza; riga++) {
+		for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 			//se c'è un pezzo nella scacchiera
 			if (scacchiera[riga][colonna] != nullptr) {
 				Pezzo* pez = scacchiera[riga][colonna];
 				scacchiera[riga][colonna] = nullptr;
 				delete pez;
+				pez = nullptr;
 			}
 
 		}
@@ -979,7 +923,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	//se il colore non è lo stesso di chi ha il turno la mossa è errata
 	if (colorePezzoPartenza != turno) {
 		pezInizio = nullptr;
-		delete pezInizio;
 		return false;
 	}
 
@@ -993,7 +936,6 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		//se i due colori combaciano la mossa non è corretta
 		if (colorePezzoPartenza == colorePezzoArrivo) {
 			pezInizio = nullptr;
-			delete pezInizio;
 			return false;
 		}
 
@@ -1011,9 +953,7 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		if (((*pezFine)).getSimbolo() == ('r' || 'R')) {
 
 			pezInizio = nullptr;
-			delete pezInizio;
 			pezFine = nullptr;
-			delete pezFine;
 
 			return false;
 		}
@@ -1030,9 +970,7 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	if (!mossaRegolarePezzo) {
 		//se non è regolare return false
 		pezInizio = nullptr;
-		delete pezInizio;
 		pezFine = nullptr;
-		delete pezFine;
 		return false;
 	}
 
@@ -1052,9 +990,7 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		if (scacchiera[temp.getRiga()][temp.getColonna()] != nullptr) {
 			//mossa non valida
 			pezInizio = nullptr;
-			delete pezInizio;
 			pezFine = nullptr;
-			delete pezFine;
 			return false;
 		}
 
@@ -1091,9 +1027,7 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 		//ritorna false perchè non si può fare la mossa
 		//(il re sarebbe sotto scacco quindi non è una mossa valida)
 		pezInizio = nullptr;
-		delete pezInizio;
 		pezFine = nullptr;
-		delete pezFine;
 
 		return false;
 
@@ -1101,10 +1035,10 @@ bool ChessBoard::mossaFattibile(const Mossa& mossa) {
 	//se sei qui allora la mossa era corretta ed è stata eseguita
 
 	pezInizio = nullptr;
-	delete pezInizio;
 	//non facciamo pezFine = nullptr perchè nel caso non puntasse a nullptr
 	//dealloca l'oggetto Pezzo ormai catturato e non più presente nella scacchiera
 	delete pezFine;
+	pezFine = nullptr; //per evitare dangling pointer
 
 	//se nessun controllo precedente ha dato come risultato return false
 	//la mossa è corretta
@@ -1131,9 +1065,9 @@ bool ChessBoard::reSottoScacco() {
 		int rigaReBianco = -1;
 		int colonnaReBianco = -1;
 		//righe
-		for (int riga = 7; riga >= 0; riga--) {
+		for (int riga = (grandezza-1); riga >= 0; riga--) {
 			//colonne
-			for (unsigned int colonna = 0; colonna < 8; colonna++) {
+			for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 				//c'è qualcosa nella casella?
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//è il re bianco?
@@ -1146,8 +1080,8 @@ bool ChessBoard::reSottoScacco() {
 		}
 		//abbiamo le coordinate del re bianco
 
-		for (int riga = 7; riga >= 0; riga--) {
-			for (unsigned int colonna = 0; colonna < 8; colonna++) {
+		for (int riga = (grandezza-1); riga >= 0; riga--) {
+			for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 				//se quella casella non è vuota
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//se quel pezzo è nero (avversario)
@@ -1222,9 +1156,9 @@ bool ChessBoard::reSottoScacco() {
 		int rigaReNero = -1;
 		int colonnaReNero = -1;
 		//righe
-		for (int riga = 7; riga >= 0; riga--) {
+		for (int riga = (grandezza-1); riga >= 0; riga--) {
 			//colonne
-			for (unsigned int colonna = 0; colonna < 8; colonna++) {
+			for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 				//c'è qualcosa nella casella?
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//è il re bianco?
@@ -1237,8 +1171,8 @@ bool ChessBoard::reSottoScacco() {
 		}
 		//abbiamo le coordinate del re nero
 
-		for (int riga = 7; riga >= 0; riga--) {
-			for (unsigned int colonna = 0; colonna < 8; colonna++) {
+		for (int riga = (grandezza-1); riga >= 0; riga--) {
+			for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 				//se quella casella non è vuota
 				if ((scacchiera[riga][colonna]) != nullptr) {
 					//se quel pezzo è bianco (avversario)
@@ -1328,9 +1262,9 @@ bool ChessBoard::possoFareMosse() {
 	if (turno) {
 
 		//scorrimento righe
-		for (int riga = 7; riga >= 0; riga--) {
+		for (int riga = (grandezza-1); riga >= 0; riga--) {
 			//scorrimento colonne
-			for (unsigned int colonna = 0; colonna < 8; colonna++) {
+			for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 				//se c'è un pezzo in questa casella
 				if (scacchiera[riga][colonna] != nullptr) {
 					//se quel pezzo è bianco
@@ -1438,9 +1372,6 @@ bool ChessBoard::possoFareMosse() {
 											pezInizio = nullptr;
 											pezFine = nullptr;
 
-											delete pezInizio;
-											delete pezFine;
-
 											//ritorno
 											if (!reScacco) {
 												return true;
@@ -1473,9 +1404,6 @@ bool ChessBoard::possoFareMosse() {
 										pezInizio = nullptr;
 										pezFine = nullptr;
 
-										delete pezInizio;
-										delete pezFine;
-
 										if (!reScacco) {
 											return true;
 										}
@@ -1495,9 +1423,9 @@ bool ChessBoard::possoFareMosse() {
 	else {
 
 	//scorrimento righe
-	for (int riga = 7; riga >= 0; riga--) {
+	for (int riga = (grandezza-1); riga >= 0; riga--) {
 		//scorrimento colonne
-		for (unsigned int colonna = 0; colonna < 8; colonna++) {
+		for (unsigned int colonna = 0; colonna < grandezza; colonna++) {
 			//se c'è un pezzo in questa casella
 			if (scacchiera[riga][colonna] != nullptr) {
 				//se quel pezzo è nero
@@ -1603,9 +1531,6 @@ bool ChessBoard::possoFareMosse() {
 										pezInizio = nullptr;
 										pezFine = nullptr;
 
-										delete pezInizio;
-										delete pezFine;
-										
 										//ritorno
 										if (!reScacco) {
 											return true;
@@ -1638,10 +1563,6 @@ bool ChessBoard::possoFareMosse() {
 
 									pezInizio = nullptr;
 									pezFine = nullptr;
-
-									delete pezInizio;
-									delete pezFine;
-
 
 									if (!reScacco) {
 										return true;

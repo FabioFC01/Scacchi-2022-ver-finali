@@ -1,3 +1,5 @@
+// COCIANCICH FABIO - 2016268
+
 #ifndef Mossa_h
 #define Mossa_h
 
@@ -23,7 +25,6 @@ private:
 	Casella arrivo;
 
 
-
 public:
 	//costruttore
 	Mossa () {
@@ -42,20 +43,6 @@ public:
 
 	void setCasellaPartenza(Casella par);
 	void setCasellaArrivo(Casella arr);
-
-	//assegnamento di copia
-	Mossa& operator= (const Mossa& a);
-
-	//costruttore di copia
-	Mossa(Mossa& a);
-
-	//assegnamento move
-	Mossa& operator= (Mossa&& a);
-
-	//costruttore move
-	Mossa(Mossa&& a);
-
-
 
 };
 

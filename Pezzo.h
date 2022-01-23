@@ -102,8 +102,6 @@ public:
 	//deve fare il controllo che sia possibile far tale mossa
 	// immaginando che il pezzo si muova in una scacchiera vuota
 	 virtual bool move(const Casella inizio, const Casella arrivo, const bool cattura) = 0;
-	
-
 
 };
 

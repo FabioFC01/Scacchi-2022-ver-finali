@@ -375,6 +375,11 @@ Mossa ChessBoard::faiMossa() {
 							//ed eliminiamo le caselle scorrette
 							if (mosse.size() > 0) {
 								for (int j = mosse.size() - 1; j >= 0; j--) {
+									//partendo dal fondo del vector ed eliminando al massimo
+									// un elemento ogni ciclo posso eliminare le caselle sbagliate
+									// senza rendere invalido il vettore a causa dello spostamento
+									// degli altri elementi 
+									// 
 									//se la casella non ha la stessa colonna del pedone
 									//il movimento è diagonale
 									if (mosse[j].getColonna() != colonna) {

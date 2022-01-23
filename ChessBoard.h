@@ -127,10 +127,6 @@ private:
 
 
 
-
-//---------------------------------------------------------------------------------
-
-
 	//inizializza la scacchiera
 	void resetScacchiera();
 
@@ -226,7 +222,7 @@ private:
 public:
 
 	//costruttore
-	ChessBoard(string arg);
+	explicit ChessBoard(string arg);
 
 	/*
 		metodo principale che gestisce la partita
@@ -243,6 +239,11 @@ public:
 	//dealloca tutti i Pezzi
 	//rimanenti nella scacchiera
 	~ChessBoard();
+
+
+	//disabilitiamo costruttore di copia e assegnamento di copia
+	ChessBoard(const ChessBoard&) = delete;
+	ChessBoard& operator= (const ChessBoard&) = delete;
 	
 };
 

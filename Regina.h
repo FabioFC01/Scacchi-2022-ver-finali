@@ -1,3 +1,5 @@
+//COCIANCICH FABIO - 2016268
+
 #ifndef Regina_h
 #define Regina_h
 

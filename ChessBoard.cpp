@@ -272,6 +272,22 @@ string ChessBoard::coordinateInTesto(Mossa m) {
 
 }
 
+//metodo che deve mescolare un vettore di caselle
+void ChessBoard::mescolaVettore(std::vector<Casella>& v) {
+
+	for (unsigned int i = 0; i < 2 * v.size(); i++) {
+		//prendi due indici a caso nel vettore
+		int par = rand() % v.size();
+		int arr = rand() % v.size();
+
+		Casella temp = v[par];
+
+		v[par] = v[arr];
+		v[arr] = temp;
+
+	}
+}
+
 
 Mossa ChessBoard::faiMossa() {
 
@@ -393,6 +409,8 @@ Mossa ChessBoard::faiMossa() {
 						}
 						//fuori if sul pedone
 						
+						//mescola il vettore con le mosse
+						mescolaVettore(mosse);
 
 						//proviamo una ad una le varie mosse 
 						//e vediamo se sono regolari
@@ -565,10 +583,11 @@ Mossa ChessBoard::faiMossa() {
 						}
 						//fuori dall'if sul pedone
 						
+						//mescola il vettore con le mosse
+						mescolaVettore(mosse);
 
 						//proviamo una ad una le varie mosse 
 						//e vediamo se sono regolari
-
 						for (unsigned int i = 0; i < mosse.size(); i++) {
 
 							//se non è stata ancora fatta una mossa regolare
@@ -625,6 +644,7 @@ Mossa ChessBoard::faiMossa() {
 		//fuori dall'else (giocatore nero non umano)
 	}
 	//fuori dall'else (turno del nero)
+	return Mossa();
 }	//fine metodo faiMossa
 
 

@@ -1,3 +1,5 @@
+// COCIANCICH FABIO - 2016268
+
 #ifndef Cavallo_h
 #define Cavallo_h
 

@@ -1,3 +1,5 @@
+//COCIANCICH FABIO - 2016268
+
 #include "Regina.h"
 
 //costruttore

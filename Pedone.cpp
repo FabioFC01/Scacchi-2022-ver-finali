@@ -1,7 +1,8 @@
+//COCIANCICH FABIO - 2016268
+
 #include "Pedone.h"
 
-
-//costruttore della classe pedonei
+//costruttore della classe pedone
 Pedone::Pedone( const bool color) {
 	
 	//inizializziamo la var. booleana a true
@@ -157,15 +158,7 @@ std::vector<Casella> Pedone::getCaselleIntermedie(const Casella inizio, const Ca
 
 
 
-
-
-
-
-
-
-
-
-	//crea vettore a caso
+	//crea vettore
 	return std::vector<Casella> ();
 
 	

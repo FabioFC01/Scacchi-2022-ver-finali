@@ -1,3 +1,5 @@
+//COCIANCICH FABIO - 2016268
+
 #include "Cavallo.h"
 
 //costruttore
@@ -21,7 +23,6 @@ bool Cavallo::move(const Casella inizio, const Casella arrivo, const bool cattur
 	//il cavallo ha la seguente mossa:
 	/*
 	
-	
 *	bianchi minuscoli
 * 
 *   0 
@@ -35,12 +36,9 @@ bool Cavallo::move(const Casella inizio, const Casella arrivo, const bool cattur
 	  01234567
 	  ABCDEFGH
 
-	  neri
+	  neri maiuscoli
 	
 	
-	*/
-
-	/*
 		rispetto alla posizione di partenza si fa una L 
 		con un lato di 2 e l'altro di 1
 

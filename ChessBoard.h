@@ -9,7 +9,6 @@
 #include <vector>
 #include <map>
 
-
 #include "Pezzo.h"
 
 #include "Pedone.h"
@@ -18,8 +17,6 @@
 #include "Cavallo.h"
 #include "Alfiere.h"
 #include "Torre.h"
-
-
 
 #include "Player.h"
 #include "Mossa.h"
@@ -218,6 +215,11 @@ private:
 
 	//metodo per contare quanti pezzi ci sono nella scacchiera
 	int contaPezzi();
+
+
+	//metodo che mescola un vettore, serve per far fare delle mosse
+	//non prevedibili al computer
+	void mescolaVettore(std::vector<Casella>& v);
 
 
 

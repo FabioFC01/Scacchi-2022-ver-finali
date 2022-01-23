@@ -1,3 +1,5 @@
+//PANOZZO ELISA SILENE
+
 #include "Alfiere.h"
 #include <iostream>
 using namespace std;
@@ -78,8 +80,6 @@ std::vector<Casella> Alfiere::getCaselleIntermedie(const Casella inizio, const C
 	if (spostColonne >= 0) { absSpostCol = spostColonne; }
 	else { absSpostCol = spostColonne * (-1); }
 
-	//----
-
 	//spostamento in diagonale tipo alfiere
 	if (absSpostCol == absSpostRighe) {
 
@@ -89,8 +89,6 @@ std::vector<Casella> Alfiere::getCaselleIntermedie(const Casella inizio, const C
 
 		int colArrivo = fine.getColonna();
 		int colPartenza = inizio.getColonna();
-
-		//-------------
 
 		//valore uguale a 1 se le righe aumentano nello spostamento
 		//-1 altrimenti
